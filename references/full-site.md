@@ -45,3 +45,17 @@ The homepage has the big spine; inner pages get **one signature moment each** fr
 - Link check: every internal link resolves (no 404s), header/footer identical across pages, current-page state correct.
 - `shots.mjs` contact sheet per page; review side by side for consistency (type sizes, header, spacing) and for cloned-looking service pages.
 - One report for the site: sitemap, per-page walk table, placeholders per page, new wording per page, implied facts.
+
+## 7. Lessons from the hotel full-site test
+- **Moving the homepage onto shared files:** if the homepage came from a generator, rebuild it from the generator and confirm it is byte-identical before refactoring; then rename to prefixed classes, move shared CSS/JS out, and compare before/after screenshots at 1440 and 375. Expected changes only: nav links go from `#anchors` to pages, and chapters gain "→ inner page" links.
+- **One loop per site, not per file:** SKILL.md's "one rAF loop" becomes one loop in `site.js` that each page registers its moment with (`Site.stage(el, fn)`); pages never start their own loop.
+- **Shared big drawings:** an external SVG `<use href>` doesn't work from file:///. Inline it per page if ≤ ~250 KB, otherwise put the drawing module in `site.js` and draw it from there.
+- **Vary hero composition across pages, not just the drawing:** list each page's hero layout (split left, split right, centred over scene, full-bleed band) in `work/design-system.md` and never repeat the same one on sibling pages. Text over a busy drawing needs a plate.
+- **Pages named after two things** ("Rooftop & breakfast") must keep them in separate sections, so the page doesn't imply they happen in the same place.
+- **Scrubbed colour changes** (sunset, day→night): caption colour follows the scene (a class toggled at the midpoint), checked at 375.
+- **FAQ pages** may answer from confirmed brief facts; only the unknowns are placeholders.
+- **Placeholder domain:** `https://www.example.com` in canonical, sitemap.xml and robots.txt, listed as a launch blocker.
+- **Header over dark heroes:** check the current-page style stays visible on every hero background.
+- **Mobile between rounds:** after each fix round, take a quick 375 contact sheet of the changed pages; don't wait for the final walk.
+- **Verification cost:** ~30 walks take ~25 minutes, so run them in parallel (separate `--workdir` per run). Walk every page at 1440 and 375, and run --nojs/--reduce once per template.
+- **Serving:** multi-file sites need a server that sends `text/css` (scripts/serve.mjs does). A raw server that sends `.css` as octet-stream makes Chrome drop the stylesheet, so the pages look unstyled.

@@ -280,3 +280,15 @@ With JS off, the page shows the finished drawing, text included. It was checked 
 - Pinned world from frame one: the diamond's top corner collides with a centred headline — use a side column or the sky triangle; captions are timed from the camera's arrival; phone zoom ≈2× desktop or the world is a strip.
 - Trees on terraced hills (stacked cylinders): default `on:` sorting draws hill trees after all levels, so back-half trees paint over higher terraces — use a per-tree `kb` or front-half placement.
 - No-JS stage fallback: caption first in DOM flow (or `order:-1`) and cap the SVG height, or the headline falls below the fold.
+
+## Build-as-you-arrive stories, big shelves, round labels (from the finance-town and pharmacy tests)
+- **Never an empty hero:** when buildings rise as the camera arrives, the start state shows empty plots. Draw each future building as a thin outline "plan" (stroke-only override, `vector-effect: non-scaling-stroke`) so the hero already shows the whole story.
+- **Hold, then travel:** split each stop's scroll into ~30% hold and ~70% travel, and let the build finish just after the camera arrives. Captions appear during the hold.
+- **Contrast objects** (the "other banks", a competitor) sit next to the stop just before their beat, so one medium shot holds both. Placing them at a far corner leaves them tiny in every frame.
+- **Rise without bounce:** `enter('rise')` overshoots; for premium work use your own ease-in-out rise (`y = (1 - easeInOut(t)) * h`).
+- **Captions over a zoomed world:** past ~2× zoom the world fills the screen. Use a soft halo about 1.5× the caption box, or a side fade, or a panel on phones; decide per beat.
+- **Open shelving with rows of items:** sort per bay, row by row (back row first), with boards and dividers drawn between rows. Plain x-major order clips lids and boards.
+- **Labels on cylinders:** face the label 45° toward the viewer and keep it narrower than the radius, or it sticks out of the outline.
+- **Wide ending shot:** frame the building, not the whole plinth; let the ground bleed off the edges.
+- **Two pinned drawn chapters on one page:** each gets its own smoothed progress and redraws only while on screen. In no-JS mode, put the caption before the still.
+- **Preview helper:** a small script that renders the scene at (state, camera) to PNG speeds up iteration. Build it early.
