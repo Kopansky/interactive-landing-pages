@@ -1,0 +1,77 @@
+---
+name: interactive-landing-pages
+description: Use when designing or building a marketing/landing page or homepage that should feel world-class — "like Notion/Stripe/Linear/Apple", "award-level", scroll-driven or interactive, illustrated/drawn, SaaS, photographic — or when asked for several design variations/directions of a site to compare, or to iterate on a client's reactions to such variations.
+---
+
+# Interactive landing pages
+
+## Overview
+Brand-level pages come from a **process**, not from one clever build: research real references → diverge into clearly different concepts → build each against one shared brief → verify the whole scroll path → let the client react → narrow into hybrids. Agents already animate well; what they skip is research, divergence, factual discipline and whole-path verification.
+
+## The loop
+
+1. **Brief first.** Fill `templates/brief-template.md`: output folder + local server URL, brand hues, fonts, audience/direction (RTL?), every section's content verbatim, the exact interaction logic (e.g. pricing maths), hard rules, and a **Client taste** list (loves / rejected) that grows every round. All variants read this one file.
+2. **Research before designing.** When a brand, site or Mobbin link is named — or the client says "like the big international brands" (pick 2–3 fitting ones yourself) — follow `references/brand-research.md` (Mobbin queries + measuring the live site) and write `research-<brand>.md`. For a known family, start from `references/brand-styles.md`. Never build "Stripe-level" from memory.
+3. **Diverge.** If the client asked for one page / one direction, build one — but pick it from 3 written concept sketches, not the first idea. Otherwise round one = 4–6 variants that are far apart: different spine (`references/concepts.md`) AND different style family (drawn / SaaS-light / SaaS-dark / photographic / editorial / playful). Offering one polished direction is the most common failure — the client's reaction to contrast is the information you need.
+4. **Build in parallel.** One agent per variant, dispatched together with `templates/variant-dispatch.md`. Each works only in its own scratch subfolder.
+5. **Verify every variant** (below). An agent's own screenshots are not verification.
+6. **Relay reactions.** For a revision of an existing page: audit it first (invented facts, implied facts, what the client disliked), measure the complaint before and after (motion count, shapes per screen, type sizes), and log what was removed. Turn each client remark into a rule in the brief's taste list ("everything bigger", "no framed sticky header", "not like a design tool", "cleaner — one drawing per section") and SendMessage running agents instead of restarting them.
+7. **Narrow.** Hybrids of what they liked (A's drawings × B's motion), then a clean spec → one final build.
+
+## Craft floor (never lowered — not for urgent, serious, small or "simple" briefs)
+A correct-but-timid page is a failure; clients rank it last. Tone changes **speed, palette and restraint of motion**, never ambition:
+- **One spine** from `references/concepts.md` that the whole page follows (a law firm can be "a case file opening", a clinic "one visit, hour by hour").
+- **Big, confident type:** at 1440 the hero headline ≥ 88px, section headlines ≥ 56px, body ≥ 19px. Check `typeScale` in walk.mjs.
+- **One visual system** that is not stock decoration: drawings, real photography, or type-as-image — used large.
+- **At least one signature scroll moment** (pinned beat, draw-on, portal, stacking…) — calm pages get a slow, precise one, not none.
+- Serious sectors (legal, medical, finance) look like Aesop, Stripe Press, Pentagram editorial — rich and quiet, not empty.
+- **Use the canvas:** hero and section headlines span the width (or sit big and centred); one idea per screen; photos full-bleed or at least half the viewport — never a small card or arch floating in white; nav and buttons sized to match (≥ 16px text, ≥ 48px tall).
+- **Design around the facts you have.** A section whose main content would be placeholders (listing cards with no listings, treatment cards with no descriptions, price tables with no prices) is redesigned: show the known part huge (the names, the one fact), and replace the rest with a single CTA ("ask us about current listings"). Placeholders are small inline tags, at most one per section — never whole cards or a page of dashed boxes. The full list lives in the HTML comment and the report.
+- "Calm / gentle / anxious audience" means slow, soft, reversible motion and shorter pins — still a designed moment, never a plain stack of text blocks.
+
+## Content rules (hard)
+- Only facts from the brief. No invented logos, testimonials, ratings, customer counts, statistics, prices, policies, opening hours, delivery terms or feature claims. If a section needs a fact you don't have, use a clearly marked placeholder and list it in the report.
+- **Implied facts count:** a drawn baguette implies it is sold; "open now" logic implies hours; describing a step ("we handle permits") implies scope. Draw generic, show logic only for confirmed data.
+- **Placeholders** are small, full-opacity inline tags reading "[… awaiting <client>]" (see "Design around the facts you have"), also listed in an HTML comment at the top; the report lists them as launch blockers.
+- **Forms:** no real endpoint → the form says "not connected yet" on submit, never a fake "sent"; POST only (no personal data in URLs); consent/privacy line as a placeholder.
+- **Regulated professions** (legal, medical, financial, psychological): no promised outcomes, success rates or "best"; disclaimers and licence numbers are placeholders for the client to approve.
+- Every agent reports **new wording** (anything not verbatim from the brief) so the client can approve it.
+- Real product UI stays recognisable — restyle its frame, not its data. Inspired by a brand ≠ copying its logo, copy or UI.
+
+## Build rules
+- One self-contained HTML file per variant; transforms/opacity only (plus attributes of small inline SVGs — fills, `d`, dash offsets); one rAF scroll loop; never intercept the wheel. Recipes: `references/motion-recipes.md`.
+- `overflow-x: clip` on every section/stage; pinned runways sized from beats with something changing every step.
+- Content visible **without JS**: hide-for-reveal classes only under `html.js`; pinned stages fall back to stacked static states; header gets a background.
+- `prefers-reduced-motion`: no pinning, no parallax, everything shown.
+- Isometric scenes: reuse `assets/isometric-engine.js` (3-tone flat solids, bake the SVG for no-JS).
+
+## Verification (mandatory, per variant)
+Run `scripts/walk.mjs` — real wheel steps to the bottom **and back up**:
+```
+node scripts/walk.mjs <url> 1440 900 --font "<font>"
+node scripts/walk.mjs <url> 375 812
+node scripts/walk.mjs <url> 1440 900 --nojs
+node scripts/walk.mjs <url> 1440 900 --reduce
+```
+Add `--shots <dir>` for evenly spaced screenshots and `--workdir <your scratch folder>` (the Chrome profile is created there and deleted).
+Pass = `noHorizontalOverflow` true, `heightStable` true, `deadScrollSteps` 0 (JS runs), nothing important in `neverFullyVisible`, no console errors, only the brief's fonts, `typeScale` meets the craft floor, `pinnedStages` ≥ 1 unless the client rejected pinning. With `--nojs`, a small height change from the font swap and deliberately disabled controls are expected. Also check: hero (headline, sub, CTA, trust line) inside 1440×900, every interaction works, pricing maths at every stop. Then look at ≤16 screenshots yourself.
+
+## Hygiene
+- Scripts, screenshots and browser profiles live in the scratch subfolder — never in the delivery folder, never outside your own folder. Never delete other agents' files or the brief.
+- `scripts/cdp.mjs` deletes its Chrome profile after exit. Pass `--workdir` so profiles live in your own folder; clean up only `ilp-prof-*` folders you created — never shared temp folders other agents may be using. The orchestrator checks free disk space after a parallel round.
+- Use your own headless Chrome — not the user's personal browser.
+- Preview: open the page as file:/// or run `node scripts/serve.mjs <site folder>` (pick a free port and confirm it serves YOUR page).
+- Images: `node scripts/compress.mjs <in> <out.jpg> 2000 0.8` (headless Chrome, no ImageMagick needed); export 2000w + 1100w and use `srcset`. Generated photos are placeholders for the client's real ones, labelled "illustrative", and what they show (a view, a dish, a room type) counts as an implied fact.
+- RTL: wrap number ranges, times and phone numbers in `<bdi dir="ltr">` (or LRI/PDI) and join "עד 20:00" with a no-break space — otherwise "08:00–19:00" renders reversed.
+
+## Red flags — stop
+| Thought | Reality |
+|---|---|
+| "One strong concept is enough" | Round one needs contrast. Build 4–6 far-apart variants (or 1 chosen from 3 sketches when the client asked for one). |
+| "It's urgent / serious, keep it simple" | Simple layout, full craft. The timid law-firm page was ranked worst of 25 tests. |
+| "A clean clinic/agency/garage template is appropriate" | Clients rejected exactly that: narrow column, small type, stock photo in a card, dashed placeholder boxes everywhere. |
+| "I know what Stripe looks like" | Measure it. Research files beat memory. |
+| "I'll fill the FAQ/menu with plausible answers" | Invented facts. Placeholder + report. |
+| "Screenshots at key points look fine" | Walk the full path down and up, plus --nojs and --reduce. |
+| "Reveal animation needs content hidden" | Only under `html.js` — no-JS must show everything. |
+| "Leave the QA folder next to the page" | Scratch folder only. |

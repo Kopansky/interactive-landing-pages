@@ -1,0 +1,29 @@
+# interactive-landing-pages
+
+A Claude Code skill for designing and building world-class, scroll-driven landing pages — drawn/illustrated, SaaS, photographic or editorial — and for running the variation → feedback → hybrid loop with a client.
+
+## Install
+
+Clone into your personal skills folder so it is available in every project:
+
+```bash
+git clone https://github.com/Kopansky/interactive-landing-pages.git ~/.claude/skills/interactive-landing-pages
+```
+(Windows: `C:\Users\<you>\.claude\skills\interactive-landing-pages`.) Restart Claude Code; the skill triggers on requests like "build a landing page like Stripe", "give me 6 design variations", "make it interactive with scroll".
+
+## What's inside
+
+| Path | What |
+|---|---|
+| `SKILL.md` | The process: brief → research → diverge → build in parallel → verify → relay reactions → narrow |
+| `references/concepts.md` | ~50 scroll concepts that were built and verified (Deck, Orbit, Zoom, Isometric, Board, Portals, Magazine…), with fit and risks |
+| `references/brand-styles.md` | Measured style systems of 15 brands (Notion, Slack, Stripe, Linear, Apple, Firecrawl, Shopify, Wise, Figma, Airbnb, Jeton, Clay, ElevenLabs, ClickUp, Ctrl) |
+| `references/brand-research.md` | How to research a new reference brand (Mobbin + live-site measurement) |
+| `references/motion-recipes.md` | Vanilla JS/CSS patterns: scroll loop, pinned beats, SVG camera, portals, arc wheel, split-flap, page turn, pendulum + a list of bugs that happened in practice |
+| `scripts/walk.mjs` | Scroll audit: real wheel steps down and back up; reports horizontal overflow, dead scroll, never-visible content, fonts, console errors |
+| `scripts/cdp.mjs` | Dependency-free headless Chrome driver (Node 22+) that always deletes its profile |
+| `assets/isometric-engine.js` | Flat 3-tone isometric SVG engine (prisms, domes, balls, rotation between iso angles) |
+| `templates/` | Shared brief and parallel-variant dispatch prompt |
+
+## Requirements
+Node 22+ and Google Chrome for the verification scripts (`CHROME_PATH` to override). Optional: the Mobbin MCP for reference research; an image-generation MCP for photographic styles.
