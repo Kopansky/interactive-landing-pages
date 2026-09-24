@@ -69,6 +69,7 @@ A correct-but-timid page is a failure; clients rank it last. Tone changes **spee
 - `overflow-x: clip` on every section/stage; pinned runways sized from beats with something changing every step.
 - Content visible **without JS**: hide-for-reveal classes only under `html.js`; pinned stages fall back to stacked static states; header gets a background.
 - `prefers-reduced-motion`: no scroll-driven pinning or parallax, everything shown (static sticky photo backdrops that captions scroll over are allowed).
+- Real-time 3D (a "real 3D" direction): three.js from a pinned CDN version is the one allowed external script — follow `references/real-3d.md` (procedural models, fallback stills, performance, glass/stacking traps).
 - Isometric scenes: reuse `assets/isometric-engine.js` — read `references/isometric.md` first (axes, solid fields, draw order, groups, text on faces, camera, baking the SVG for no-JS).
 
 ## Verification (mandatory, per variant)

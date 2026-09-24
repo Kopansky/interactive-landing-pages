@@ -21,6 +21,7 @@ git clone https://github.com/Kopansky/interactive-landing-pages.git ~/.claude/sk
 | `references/brand-research.md` | How to research a new reference brand (Mobbin + live-site measurement) |
 | `references/motion-recipes.md` | Vanilla JS/CSS patterns: scroll loop, pinned beats, SVG camera, portals, arc wheel, split-flap, page turn, pendulum + a list of bugs that happened in practice |
 | `references/full-site.md` | Full-site mode: design system from the approved homepage, sitemap, inner-page patterns, navigation, SEO, whole-site verification |
+| `references/real-3d.md` | Real-time 3D with three.js: procedural products, scroll stories, baking fallback stills, performance, traps |
 | `references/isometric.md` | Guide to the isometric engine: axes, solid fields, draw order, groups, text on faces, camera, baking for no-JS, premium look |
 | `scripts/walk.mjs` | Scroll audit: real wheel steps down and back up; reports horizontal overflow, dead scroll, never-visible content, fonts, console errors, type scale and the craft-floor verdict |
 | `scripts/shots.mjs` | Screenshots at chosen scroll positions (reached by real scrolling) + one contact sheet — for reviewing pinned stages beat by beat |
