@@ -31,3 +31,10 @@ Everything modelled is a claim: construction layers and their count, mechanism l
 
 ## Phones
 Products cross text on narrow screens: give text a solid/gradient band, lay long objects sideways, or move the object to the top half during text beats.
+
+## More from the keyboard test
+- Separate camera keyframes for wide and tall screens; shift the framing with `camera.setViewOffset` so captions get room; add a caption scrim whenever the object fills the screen.
+- Put interactive buttons in a layer ABOVE the canvas (they ended up behind it once); fade text with opacity on children, never on the article (it creates a stacking context and breaks "name behind the object").
+- three.js gotchas: `RoundedBoxGeometry` is already non-indexed (`toNonIndexed` warns — a console error for walk.mjs); `computeVertexNormals` on it gives faceted edges; canvas-gradient floors with a wrong centre show a rectangle.
+- Bake with a render mode (`?render=1` + `window.__render(t, w, h)` returning a JPEG/WebP) and one build script; wide (1600×1000) and tall (900×1200) stills per beat.
+- A sticky buy bar's bottom padding must be constant, not follow the bar's live height (it breaks heightStable).
