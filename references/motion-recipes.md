@@ -72,6 +72,10 @@ const vb = A.map((a, i) => lerp(a, B[i], ease(p)));
 svg.setAttribute('viewBox', vb.join(' '));
 ```
 
+**Matrix camera** (when the camera must also rotate, or HTML labels must follow moving parts): keep the SVG viewBox fixed and move one world group — `world.setAttribute('transform', `translate(${tx} ${ty}) rotate(${deg}) scale(${s}) translate(${-fx} ${-fy})`)` (focus point fx,fy lands on screen point tx,ty). Position HTML labels from `part.getScreenCTM()` each frame.
+
+**3D object turn (phone, card, product):** `perspective` goes on the element directly above the rotating one; apply scale and rotate together around the centre; fake thickness with ~10–13 stacked layers; swap the screen/face content at 180° while the back faces the viewer. No-JS fallback from the same markup: `display:contents` on the stage + grid rows so each state sits beside its beat text.
+
 ## 5. Shape portal (clip-path grows into the next section)
 
 ```js
@@ -156,7 +160,30 @@ Scroll progress k: `--bar` 46% → 0% (letterbox opens), `--z` 1.35 → 1 (pull-
 
 Keep one signature moment and slow it down: long easing (0.8–1.2s equivalents), small travel (≤ 24px), no bounce, no loops, pins ≤ 2 screens. Good calm moments: a document or file opening page by page, a hairline timeline filling, a big word resolving from blurred to sharp, a photo arch widening. A page with only fade-ins is not "calm", it is unfinished.
 
-## 15. Things that broke in practice (check each)
+## 15. Drawn worlds (flat geometric illustration at page scale)
+
+- **Tones:** every colour as a light/base/shade triple; choose outlines OR no outlines for the whole page. Large flat areas get a second layer (distant roofs, hills, pattern at 6–10% contrast) or they read as empty.
+- **Zoom-safe detail:** if the camera zooms 3–4×, the zoomed part needs its own detail (door hardware, date stone) — check a screenshot at the maximum zoom.
+- **Fit-region camera (phones):** don't hard-code start/end viewBoxes; define regions of the drawing and fit each into a target box of the screen, with separate targets for landscape and portrait:
+```js
+function fit(region, box, vw, vh){ // region/box = {x,y,w,h}; box in screen px
+  const s = Math.min(box.w / region.w, box.h / region.h);
+  return { x: region.x - (box.x / s), y: region.y - (box.y / s), w: vw / s, h: vh / s }; } // → viewBox
+```
+- **Text over a moving drawing:** put copy on solid panels that scroll over it, or over a flat sky zone the camera keeps clear — never over busy detail.
+- **No-JS default = the hero framing,** not the finished scene (a raised sea/sun behind the hero text is a mess); raise end states from JS for reduced motion.
+- **Reduced motion for one pinned drawing:** show a still crop of the finished drawing per chapter (one `<svg><use href="#world"/></svg>` with a different viewBox each).
+- **Build scripts are allowed:** generate the SVG with a Node script and inline it, so the page stays one self-contained HTML file with the drawing baked in.
+- **Label the world:** a small "Illustration" note on the drawing + a footer line; list what the drawing implies (window count, balcony, signage) in the report.
+
+### Path over photography (a line that runs through photos)
+- Pick anchor points in each photo (the track, the aisle, the stream) in image coordinates; map them to screen with the same object-fit/object-position maths as the crop, so the line stays on them at any size.
+- Inside a zoomed/pinned photo, put an SVG sized to the photo inside the zoomed wrapper so the line zooms with it; draw page-space segments separately (a sticky stage breaks a line drawn in page space).
+- Rebuild the page-space path after fonts load, images load and on resize; anchors reveal by opacity only (no translate), or the line lands in the wrong place.
+- A thin line over photos: dark edge + light core, so it reads on sky and shadow. No-JS: the line may simply be absent.
+- Zoom a photo at most ~source width / viewport width (2.5× on a 2000px source was soft).
+
+## 16. Things that broke in practice (check each)
 
 - Off-screen fly-in items widened the page (2,223px at a 1440 viewport) and it stayed wide after scrolling back → `overflow-x: clip` on every section/stage.
 - A pinned phone runway of 3,600px with the last 600px doing nothing → size runways from beats.
@@ -175,3 +202,11 @@ Keep one signature moment and slow it down: long easing (0.8–1.2s equivalents)
 - `<use href="#sym">` without width/height on a symbol with a negative-origin viewBox rendered clipped → give the `<use>` explicit size.
 - Styles on `path` inside a `<symbol>` reused via `<use>` did not apply (ticks rendered as black triangles) → style the `<use>` with `fill`/`stroke` + `currentColor` inside the symbol.
 - Some Hebrew display fonts (Suez One) draw ₪ as "שח" → check the ₪ glyph in the chosen font or set it in the body font.
+- A max-content marquee row inside a CSS grid widened the grid column to 7,083px and, in RTL, anchored off-screen → `grid-template-columns:minmax(0,1fr)`, make the track `direction:ltr`, clamp its translate to [-(track − viewport), 0].
+- Fire/smoke that should flicker: drive it from scroll progress (e.g. a sine of k), not a CSS loop, so dead-scroll checks stay meaningful.
+- Header over changing colour blocks / pinned steps: give each section (and stage step) a `data-theme`, and let the header take the theme of whatever is under it — frameless, never a pill.
+- Heading size set on inner spans made walk.mjs measure a 216px heading as 30px → set font-size on the heading element itself.
+- Pin budget: ~0.5–0.8 viewport per beat. A section may pin longer than ~2 viewports only when it is the page spine (path, world, one-object story) AND every wheel step changes something; otherwise split it.
+- A later `@media` rule silently beat a mockup's `@container` rule (video half-width on phones) → keep container-query rules last, or scope media rules away from mockup internals.
+- A section `padding` shorthand wiped the `.wrap` side gutters on phones → set only `padding-block` on sections.
+- Assembling a product window on a pinned stage: stagger pieces within a beat, never overlap two beats' fades, start the first piece before the pin so the stage never opens empty, keep one continuous element (progress bar) moving.

@@ -29,6 +29,7 @@
 - Form destination (endpoint or "none yet" → form says not connected):
 - Unknown facts (become placeholders + launch blockers):
 - Claims to avoid (outcomes, "best", medical/legal promises, anything implied by images):
+- Shop (if any): product list, price policy (real / demo / hidden), shipping threshold and whether "from" or "over", gift-wrap price, quantity limits, checkout status, returns.
 - Images allowed? Real ones supplied? Generated ones must not show people as the owner, staff or customers.
 
 ## Client taste (grows with every round of feedback)

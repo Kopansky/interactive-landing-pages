@@ -26,16 +26,21 @@ A correct-but-timid page is a failure; clients rank it last. Tone changes **spee
 - **At least one signature scroll moment** (pinned beat, draw-on, portal, stacking…) — calm pages get a slow, precise one, not none.
 - Serious sectors (legal, medical, finance) look like Aesop, Stripe Press, Pentagram editorial — rich and quiet, not empty.
 - **Use the canvas:** hero and section headlines span the width (or sit big and centred); one idea per screen; photos full-bleed or at least half the viewport — never a small card or arch floating in white; nav and buttons sized to match (≥ 16px text, ≥ 48px tall).
-- **Design around the facts you have.** A section whose main content would be placeholders (listing cards with no listings, treatment cards with no descriptions, price tables with no prices) is redesigned: show the known part huge (the names, the one fact), and replace the rest with a single CTA ("ask us about current listings"). Placeholders are small inline tags, at most one per section — never whole cards or a page of dashed boxes. The full list lives in the HTML comment and the report.
+- **Design around the facts you have.** A section whose main content would be placeholders (listing cards with no listings, treatment cards with no descriptions, price tables with no prices) is redesigned: show the known part huge (the names, the one fact), and replace the rest with a single CTA ("ask us about current listings"). Placeholders are small inline tags, at most one visible per section — never whole cards or a page of dashed boxes (exception: each closed FAQ answer may hold its own tag; keep the accordion). The full list lives in the HTML comment and the report.
+- **Thin content** (no listings, menu, portfolio or answers yet): make the service structure itself the visual (floors of a building, stations of a path, states of one object) — never a grid waiting for content.
+- walk.mjs also reports `largestVisualPctOfScreen` (share of the screen taken by the largest image/SVG/canvas/mockup) and `h1WidthPct` (hero headline width as % of the viewport): a main visual under ~35% of the screen (a portrait phone mockup is the exception — judge it by height) or a hero headline under ~45% of the width usually means "small thing floating in white" — look again.
 - "Calm / gentle / anxious audience" means slow, soft, reversible motion and shorter pins — still a designed moment, never a plain stack of text blocks.
 
 ## Content rules (hard)
 - Only facts from the brief. No invented logos, testimonials, ratings, customer counts, statistics, prices, policies, opening hours, delivery terms or feature claims. If a section needs a fact you don't have, use a clearly marked placeholder and list it in the report.
 - **Implied facts count:** a drawn baguette implies it is sold; "open now" logic implies hours; describing a step ("we handle permits") implies scope. Draw generic, show logic only for confirmed data.
 - **Placeholders** are small, full-opacity inline tags reading "[… awaiting <client>]" (see "Design around the facts you have"), also listed in an HTML comment at the top; the report lists them as launch blockers.
+- Disabled controls are styled with colour, not opacity (opacity reads as hidden to the checks and to users).
+- **Portfolio trades** (nails, hair, tattoo, photography, architecture): the photos ARE the work — generated images must be labelled mood/illustrative and listed as launch blockers to replace with the owner's real work; drawn or type-led directions avoid the problem entirely.
 - **Forms:** no real endpoint → the form says "not connected yet" on submit, never a fake "sent"; POST only (no personal data in URLs); consent/privacy line as a placeholder.
-- **Regulated professions** (legal, medical, financial, psychological): no promised outcomes, success rates or "best"; disclaimers and licence numbers are placeholders for the client to approve.
+- **Regulated sectors** (legal, medical, financial, psychological, alcohol, gambling): no promised outcomes, success rates or "best"; disclaimers, licence numbers, age gates (18+) and legally required warnings are placeholders for the client to approve.
 - Every agent reports **new wording** (anything not verbatim from the brief) so the client can approve it.
+- **Sample content in invented product UI** (no real app shown to you): label every mockup "Sample content", keep names generic, show only states that map to brief facts (every column, badge and button is a feature claim), and list sample content separately from placeholders.
 - Real product UI stays recognisable — restyle its frame, not its data. Inspired by a brand ≠ copying its logo, copy or UI.
 
 ## Build rules
@@ -43,7 +48,7 @@ A correct-but-timid page is a failure; clients rank it last. Tone changes **spee
 - `overflow-x: clip` on every section/stage; pinned runways sized from beats with something changing every step.
 - Content visible **without JS**: hide-for-reveal classes only under `html.js`; pinned stages fall back to stacked static states; header gets a background.
 - `prefers-reduced-motion`: no pinning, no parallax, everything shown.
-- Isometric scenes: reuse `assets/isometric-engine.js` (3-tone flat solids, bake the SVG for no-JS).
+- Isometric scenes: reuse `assets/isometric-engine.js` — read `references/isometric.md` first (axes, solid fields, draw order, groups, text on faces, camera, baking the SVG for no-JS).
 
 ## Verification (mandatory, per variant)
 Run `scripts/walk.mjs` — real wheel steps to the bottom **and back up**:
@@ -53,8 +58,8 @@ node scripts/walk.mjs <url> 375 812
 node scripts/walk.mjs <url> 1440 900 --nojs
 node scripts/walk.mjs <url> 1440 900 --reduce
 ```
-Add `--shots <dir>` for evenly spaced screenshots and `--workdir <your scratch folder>` (the Chrome profile is created there and deleted).
-Pass = `noHorizontalOverflow` true, `heightStable` true, `deadScrollSteps` 0 (JS runs), nothing important in `neverFullyVisible`, no console errors, only the brief's fonts, `typeScale` meets the craft floor, `pinnedStages` ≥ 1 unless the client rejected pinning. With `--nojs`, a small height change from the font swap and deliberately disabled controls are expected. Also check: hero (headline, sub, CTA, trust line) inside 1440×900, every interaction works, pricing maths at every stop. Then look at ≤16 screenshots yourself.
+Review pinned stages beat by beat with `node scripts/shots.mjs <url> <dir> --n 12` (or `--from 0.1 --to 0.4` for one runway) — it writes frames plus one contact sheet to look at. Add `--shots <dir>` to walk.mjs for evenly spaced screenshots and `--workdir <your scratch folder>` (the Chrome profile is created there and deleted).
+Pass = `noHorizontalOverflow` true, `heightStable` true, `deadScrollSteps` 0 (JS runs), nothing important in `neverFullyVisible`, no console errors, only the brief's fonts, `typeScale` meets the craft floor, `pinnedStages` ≥ 1 unless the client rejected pinning or the spine is continuous (Path, Ribbons — then one chapter still gets a slow pinned moment or an equally strong scroll-linked one). With `--nojs`, a small height change from the font swap and deliberately disabled controls are expected. Also check: hero (headline, sub, CTA, trust line) inside 1440×900, every interaction works, pricing maths at every stop. Then look at ≤16 screenshots yourself.
 
 ## Hygiene
 - Scripts, screenshots and browser profiles live in the scratch subfolder — never in the delivery folder, never outside your own folder. Never delete other agents' files or the brief.

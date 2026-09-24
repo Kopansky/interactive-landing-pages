@@ -242,7 +242,7 @@ The look for regulated or high-trust clients: **rich but quiet**, never timid.
 
 Three variants were built: **scenes per section** (a small iso world beside each section's text), **tower** (one sticky building, a floor per chapter, the camera climbs), **robot** (one character assembled from solids that powers on, rolls, points and waves across every scene). Tokens: white canvas, ink outlines on chips (1.5px), light 400 two-tone headlines at large size (intro clamp 40→82), black 10px buttons, flat pastel fields behind product shots.
 
-Use `assets/isometric-engine.js` (`ISO`):
+Use `assets/isometric-engine.js (full guide: references/isometric.md)` (`ISO`):
 - **Solids:** `ISO.box(x,y,z,w,d,h,colour)` and extruded profiles (`P.rect/rrect/circle/sector/arch/tomb/star/plus/bubble/shield/crescent`, `ext({pl, pr, o, e, c})`), domes and balls; flat decals on faces with `onX/onY/onZ/polyY/polyZ` (windows, screens, dots).
 - **Colour:** each palette entry is a 3-tone ramp (top light / left mid / right dark) chosen relative to the viewer — `ISO.PAL` (`base, paper, road, mint, aqua, sea, navy, lime, lilac, coral, peach, sun, ink, grey, night`); replace the ramps with the client's hues; `mixPal` blends day → night.
 - **Build-in:** `ISO.enter(solid, p, delay, 'rise'|'drop', len)` — rise grows from the ground with a slight overshoot (`backOut`), drop lowers with a hop. Drive `p` from scroll progress.

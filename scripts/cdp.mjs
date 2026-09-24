@@ -47,7 +47,8 @@ export async function open({ url, W = 1440, H = 900, nojs = false, reduce = fals
   ws.onclose = () => { for (const r of pend.values()) r({ error: 'socket closed' }); pend.clear(); };
   const send = (method, params = {}) => new Promise(r => { const i = ++id; pend.set(i, r); try { ws.send(JSON.stringify({ id: i, method, params })); } catch { pend.delete(i); r({ error: 'socket closed' }); } });
   const ev = async js => {
-    const r = await send('Runtime.evaluate', { expression: js, awaitPromise: true, returnByValue: true });
+    // never wait forever on one evaluation (a stuck page would otherwise hang the run and leak the profile)
+    const r = await Promise.race([send('Runtime.evaluate', { expression: js, awaitPromise: true, returnByValue: true }), sleep(20000).then(() => ({ result: { exceptionDetails: { text: 'evaluate timed out' } } }))]);
     if (r.result?.exceptionDetails) return 'EVALERR ' + (r.result.exceptionDetails.exception?.description || r.result.exceptionDetails.text);
     return r.result?.result?.value;
   };

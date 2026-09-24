@@ -24,9 +24,11 @@ const fonts = await b.ev(`(function(){ var f = {}; document.querySelectorAll('bo
 const scale = await b.ev(`(function(){ var px = function(sel){ return [].map.call(document.querySelectorAll(sel), function(e){ return parseFloat(getComputedStyle(e).fontSize); }); };
   var h1 = px('h1'), h2 = px('h2'), p = px('p').sort(function(a,b){return a-b;});
   var sticky = [].filter.call(document.querySelectorAll('body *'), function(e){ return getComputedStyle(e).position === 'sticky' && e.offsetHeight > innerHeight * .5; }).length;
-  return { h1: h1.length ? Math.max.apply(0, h1) : 0, h2Min: h2.length ? Math.min.apply(0, h2) : 0, bodyMedian: p.length ? p[p.length >> 1] : 0, pinnedStages: sticky }; })()`);
+  var vis = [].slice.call(document.querySelectorAll('img,svg,canvas,video,picture,[class*=window],[class*=mock],[class*=device],[class*=phone],[class*=browser]')).filter(function(e){ return !e.closest('button,a,[aria-hidden=true] svg svg'); }).map(function(e){ var r = e.getBoundingClientRect(); return r.width * r.height / (innerWidth * innerHeight); });
+  var h1w = [].map.call(document.querySelectorAll('h1'), function(e){ return e.getBoundingClientRect().width / innerWidth; });
+  return { largestVisualPctOfScreen: vis.length ? Math.round(Math.max.apply(0, vis) * 100) : 0, h1WidthPct: h1w.length ? Math.round(Math.max.apply(0, h1w) * 100) : 0, h1: h1.length ? Math.max.apply(0, h1) : 0, h2Min: h2.length ? Math.min.apply(0, h2) : 0, bodyMedian: p.length ? p[p.length >> 1] : 0, pinnedStages: sticky }; })()`);
 const httpStatus = await b.ev(`(performance.getEntriesByType('navigation')[0] || {}).responseStatus || 0`);
-const fontLoaded = font ? await b.ev(`document.fonts ? [].some.call(document.fonts, function(f){ return f.family.replace(/["']/g, '') === ${JSON.stringify(font)} && f.status === 'loaded'; }) : 'n/a'`) : null;
+const fontLoaded = font ? await b.ev(`document.fonts ? Array.from(document.fonts).some( function(f){ return f.family.replace(/["']/g, '') === ${JSON.stringify(font)} && f.status === 'loaded'; }) : 'n/a'`) : null;
 const probe = `(function(){
   if (!window.__seen){ window.__seen = new Map(); window.__trk = [].slice.call(document.querySelectorAll(${JSON.stringify(track)})).filter(function(el){
     return !el.closest('[aria-hidden="true"],[hidden],[inert],dialog:not([open]),[role=dialog],nav [class*=sheet],[class*=menu] [class*=sheet],template,noscript'); }); }
@@ -58,7 +60,7 @@ const report = { url, httpStatus, size: `${W}x${H}`, flags: a.filter(x => x === 
   maxScrollY: Math.max(...rows.map(r => r.y)), scrollHeights: [...new Set(rows.map(r => r.sh))],
   horizontalOverflow: wide.slice(0, 30), deadScrollAtY: dead.slice(0, 40), neverFullyVisible: unseenList,
   fontsInUse: fonts, fontLoaded, typeScale: scale, console: b.logs.slice(0, 30),
-  verdict: { loaded: !(httpStatus >= 400), craftFloor: (W < 1200 || flag("--reduce") || flag("--nojs")) ? "n/a (default desktop run only)" : { h1: scale.h1 >= 88, body: scale.bodyMedian >= 19, pinned: scale.pinnedStages >= 1 }, scrolls: Math.max(...rows.map(r => r.y)) > 0 || rows[0].sh <= H, noHorizontalOverflow: wide.length === 0, heightStable: new Set(rows.map(r => r.sh)).size === 1, deadScrollSteps: dead.length, neverVisible: unseenList.length, consoleErrors: b.logs.length } };
+  verdict: { loaded: !(httpStatus >= 400), craftFloor: (W < 1200 || flag("--reduce") || flag("--nojs")) ? "n/a (default desktop run only)" : { h1: scale.h1 >= 88, h2: !scale.h2Min || scale.h2Min >= 56, body: scale.bodyMedian >= 19, pinned: scale.pinnedStages >= 1 }, scrolls: Math.max(...rows.map(r => r.y)) > 0 || rows[0].sh <= H, noHorizontalOverflow: wide.length === 0, heightStable: new Set(rows.map(r => r.sh)).size === 1, deadScrollSteps: dead.length, neverVisible: unseenList.length, consoleErrors: b.logs.length } };
 console.log(JSON.stringify(report, null, 1));
 clearTimeout(killer);
 await b.close();
