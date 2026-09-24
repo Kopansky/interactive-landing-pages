@@ -111,6 +111,8 @@ Step each cell through intermediate characters (stagger 20–40ms per cell). For
 ```
 `leaf.style.transform = rotateY(${-180 * p}deg)` plus a shading gradient whose opacity peaks at 90°. Hebrew books turn the other way — flip `transform-origin` and the sign.
 
+**3D page turn, details:** each page back needs its own gutter shading; fix the z-order of stacked pages so they don't flicker; covers are bigger than pages (inset the inside-cover art); opacity or filters on the book container flatten `preserve-3d`; size the book from the space below the caption. Hebrew books: pages lift on the left and land on the right — "right-to-left" in a brief means reading order, not motion direction.
+
 ## 9. Damped pendulum (hanging mobile, nudges)
 
 ```js
@@ -178,10 +180,11 @@ function fit(region, box, vw, vh){ // region/box = {x,y,w,h}; box in screen px
 - **One state function:** write the animated states as one self-contained function of progress; the page runs it live and the build script reuses it to bake no-JS/reduced-motion stills.
 - **3 tones on a curved object without outlines:** horizontal light/base/shade bands clipped to the object's outline.
 - **Wide objects on portrait phones:** let the hero crop bleed past the screen edge and add a pan along the object as its own beat.
+- **Jointed human figures:** blend joint ANGLES between poses (blending target points flips elbows); keep the lowest point on the floor; solve two-joint limbs so planted hands/feet stay planted; switch the fixed point (feet ↔ hands) only at a pose both share; add in-between poses for multi-support moves (plank step-back) or hands float; offset joints within a limb for "joint by joint", but never the two legs (accidental three-legged pose). Pre-smooth the figure's centre over the whole timeline for a camera that follows without lag; the mat/floor stays fixed in the world.
 - **Label the world:** a small "Illustration" note on the drawing + a footer line; list what the drawing implies (window count, balcony, signage) in the report.
 
 ### Multi-keyframe photo camera
-Keyframes of {scale s, focus cx, cy (0–1 of the image)}; interpolate s geometrically and the focus linearly; translate = -s·(c − 0.5)·size, clamped to ±(s − 1)/2·size so the image edge never shows. Portrait phones see ~26% of a 16:9 frame — write separate focus points for portrait. Keep zoom ≤ ~1.5–1.9× on 2000px sources — on portrait phones cover-scaling a 16:9 photo already zooms ~2.7×, so use a camera box (e.g. top 60% of the screen) and separate phone zoom values per stop. Overlays (rings, stickers) live in image coordinates so they ride along.
+Keyframes of {scale s, focus cx, cy (0–1 of the image)}; interpolate s geometrically and the focus linearly; translate = -s·(c − 0.5)·size, clamped to ±(s − 1)/2·size so the image edge never shows. Portrait phones see ~26% of a 16:9 frame — write separate focus points for portrait. Size the image to its full crop area and transform THAT (object-fit:cover crops to its own box first, so clamped pans show black edges on phones). Keep zoom ≤ ~1.5–1.9× on 2000px sources — on portrait phones cover-scaling a 16:9 photo already zooms ~2.7×, so use a camera box (e.g. top 60% of the screen) and separate phone zoom values per stop. Overlays (rings, stickers) live in image coordinates so they ride along.
 Plan a **shot list before generating**: matching light, grade and screen direction across photos, and one photo containing the next (a window that shows the next scene) if the camera must travel through it.
 No-JS / reduced motion for photo stages: sticky backdrops — `.ph{position:sticky;top:0;height:100vh}` + `.ph + .cap{margin-top:-100vh}` — so each caption scrolls over its own photo instead of one photo stretching over several captions.
 
@@ -200,6 +203,9 @@ Keep the camera centred on the destination during the dive so the portal circle'
 ### Vehicles on a path (truck, car, bike)
 Map scroll to a target screen height (e.g. 60%) and look up the matching point on a path that only ever goes down — stability and reversal come free (flat stretches make the rider jump sideways; keep them short). Use two drawn views (side on curves, front/back on straights) switched by the path angle, cap the tilt (~24°), turn wheels with distance, un-mirror lettering when the view flips. Crossing a pinned stage: three path pieces (before the pin / inside the stage / after), the rider lives in whichever contains its target height; the parking spot inside the stage must sit exactly at that height. Drawings sit UNDER the road+rider layer, text above them.
 
+### Time of day from one photo
+Grade one photo at build time (canvas-job) into morning / noon / golden / night; mask windows with a BLURRED mask (per-pixel masks speckle floors); add night lamp pools by hand. What keeps it from looking timid: a moving sun/moon on an arc, light bands sliding across the floor, camera drift and captions that change position. Ink type on a bright sky needs a light scrim, not a dark one.
+
 ### Path over photography (a line that runs through photos)
 - Pick anchor points in each photo (the track, the aisle, the stream) in image coordinates; map them to screen with the same object-fit/object-position maths as the crop, so the line stays on them at any size.
 - Inside a zoomed/pinned photo, put an SVG sized to the photo inside the zoomed wrapper so the line zooms with it; draw page-space segments separately (a sticky stage breaks a line drawn in page space).
@@ -210,14 +216,28 @@ Map scroll to a target screen height (e.g. 60%) and look up the matching point o
 ### Recolouring part of a photo (nails, a car body, a wall)
 - Generate the photo with the region in a colour that is easy to key out (e.g. cobalt nails), then build in Chrome canvas: a region mask (smoothed + dilated 1–2px), a highlight mask and a greyscale shading map.
 - Each new colour = flat colour layer + shading map with `mix-blend-mode: luminosity`, revealed by a sweeping gradient mask; don't brighten edge pixels (white halos).
+- Keying natural subjects (hair): select by saturation, flood-fill the backdrop from the image border, shrink the mask edge ~2px (halo); each target colour needs its own brightness setting in the luminosity blend (light shades blow out, dark ones go pink). Pixel jobs on 2048px images: downscale to ~1024 or allow a long timeout.
 - Inline masks as data URIs; keep the mask aligned with the photo's crop at every breakpoint.
 - Design image prompts around the interaction: empty space where the RTL text sits, key-able colours, the subject centred for 16:9 and phone crops.
+
+### Phone-led product stories (app sites)
+One persistent phone frame whose screens crossfade (separate frames visibly dip); size the UI in em from the viewport height; the same markup becomes N static phones for no-JS (display:contents + grid). On 375×812 a caption + visual + phone can't coexist: slide the phone away during visual-heavy beats and cap the mobile zoom.
+Glows/lights in photo coordinates: an SVG overlay in the image's own coordinate system; blur filters on thin paths need `filterUnits="userSpaceOnUse"` or they clip into a band.
+
+### Scroll-driven chart (response time, prices, growth — sample data only)
+Stretched SVG polyline with non-scaling strokes, revealed by a clipPath width tied to progress; an HTML dot rides the head (not an SVG circle, which would stretch); bake the full line for no-JS. Label moving sample numbers with one persistent "sample data" meta bar plus a note under the chart. State colours (red/green) are allowed alongside the single accent when the story needs them.
 
 ### Product photo parts (battery out, lid off) and borderless studio shots
 - Flatten the generated studio background to exactly the page colour and smooth its grain (canvas-job) so a full-bleed product never shows a box; set the page background to that colour.
 - Pull a part out of one photo: cut it along its own axis into a transparent layer, keep the objects in front of it (chainring, handle) as a separate top layer, rebuild hidden sections by repeating along the part, paint the empty bay underneath.
 - Generate every later product view with the first product shot as the reference image; on a single-product page the generated photo IS a spec claim (drivetrain, clips, accessories) — list it.
 - Spine budget for a product story: ~0.8–1 viewport per beat.
+
+### Focus / blur reveal (optician, camera, "clarity" stories)
+The page sits under a blurred copy; a moving lens-shaped window (inline SVG mask, not a separate file) shows the sharp layer through it; at the end the blur drops away. Keep the headline, CTA and trust line sharp from frame one — checks count blurred text as "visible", so look at screenshots. See-through product parts (lenses, glass, bottles): background removal keeps them solid — clear the transparent regions in a canvas-job.
+
+### Light strips / glows in a photo (ambient light, neon, lamps)
+Generate with the lights in a key-able colour, split into a neutral base (colour stripped) + a greyscale glow layer; tint the glow with a multiply fill inside an isolated group and `screen` it over the base — the hue can then sweep continuously. A hue sweep is not the product's real palette — label it.
 
 ### One neutral product, many looks
 Generate ONE blank product (white can, plain bottle, blank box) on white; tint it with `mix-blend-mode: multiply` over each colour field and wrap your own HTML/SVG label on it (lay the photo's highlights/condensation back over the label with `screen`/`luminosity`). Avoids brand text in generated images and keeps every variant consistent. Multiply only blends with the element's own backdrop — a transform, `isolation`, or `container-type` on an ancestor creates a new stack and the product turns invisible or boxed.
@@ -242,10 +262,13 @@ Measure each object's start rect and target rect with transforms off (on load an
 Background-remove once → alpha WebP (`compress.mjs in.png out.webp`); cut soft wedges with conic-gradient masks around a pivot; land them one by one; hide seams by stacking "landed so far" and swapping to the unmasked image at the end.
 
 ### Pile → layout (receipts into columns, tiles into a grid, cards onto a shelf)
-Let the page's own layout be the FINAL state; compute each piece's offset from a seeded "pile" position and animate the offset to 0 by beat progress. No-JS, reduced motion and the end state then come for free. Put shadows on a wrapper when the piece is clip-pathed (zigzag receipts clip their own shadow).
+Split one multi-object cut-out into pieces by connected components (not a coarse grid — stair-step edges); generate container and pieces at the same camera distance; add a drop-shadow (cut-outs lose contact shadows); `height:auto` on every piece. When the final layout sits inside a zooming container, compute pile positions with the inverse transform; user toggles inside a pinned stage change the target layout — animate from the current positions. Let the page's own layout be the FINAL state; compute each piece's offset from a seeded "pile" position and animate the offset to 0 by beat progress. No-JS, reduced motion and the end state then come for free. Put shadows on a wrapper when the piece is clip-pathed (zigzag receipts clip their own shadow).
 
 ### Numbers as the image
 Section numbers only count up from 0; rolling digits settle into whole positions quickly (a paused roll must never read "49" for "04"); a price never rolls through other values (₪0 passing ₪8 implies a price). Sample documents (receipts, forms, payslips): say "not an official form", keep the maths consistent, no years, and treat rates (VAT %) as legal facts to confirm.
+
+### Bilingual / split-letter kinetic type
+Split letters into `<span>` (never `<i>` — fake italic), give each word its own `dir` wrapper (inline-block letters are bidi-neutral), keep one visually-hidden text copy and `aria-hidden` on the split letters, measure after `document.fonts.ready`. Hebrew leaves right→left, English arrives left→right. "+1" in a Hebrew line → `<bdi dir="ltr">`. A `width:max-content` row in RTL aligns right (breaks translateX maths); a block English line in an RTL heading aligns left — set `text-align` explicitly.
 
 ## Type as image
 - Fit text to width by measuring once (`scrollWidth`) and scaling font-size, not transform (`will-change: transform` on scaled text blurs it).
@@ -288,7 +311,7 @@ Section numbers only count up from 0; rolling digits settle into whole positions
 - Absolute stage panels without `isolation:isolate` + explicit `z-index` let an earlier panel paint over a later one.
 - Frameless header: transparent only over photos; over light or dark text sections give it a borderless solid fill, or it overlaps the content.
 - Caption swaps overlapped two titles on phones → never overlap two beats' caption fades (the out-fade ends before the in-fade starts).
-- Lines on a zooming SVG turn chunky → `vector-effect: non-scaling-stroke`. Styling parts inside a reused `<use>` symbol: CSS custom properties DO inherit into it (`fill: var(--part-a)`), so light one part at a time by setting the variable on the `<use>`.
+- Lines on a zooming SVG turn chunky → `vector-effect: non-scaling-stroke` — but NOT on paths that use `pathLength=1` dash progress (the dashes break apart); scale those strokes by hand instead. Styling parts inside a reused `<use>` symbol: CSS custom properties DO inherit into it (`fill: var(--part-a)`), so light one part at a time by setting the variable on the `<use>`.
 - Multi-beat pinned scenes: every beat gets a different composition (scale, side, where the name sits), not only "something changes".
 - A reveal class named `.in` collided with a layout class `.in` and changed page height → prefix state classes (`is-in`).
 - A sticky panel inside a pinned story with nothing else moving = dead scroll → keep one continuous element moving through every beat.
@@ -300,3 +323,36 @@ Section numbers only count up from 0; rolling digits settle into whole positions
 - Patching files with JS `String.replace`: `$$`, `$&` in the replacement are special patterns (`$$(` became `$(`) → use a replacer function.
 - RTL: a flowing image wider than the screen is aligned to the right edge and crops the subject off the left → position with `margin-inline-start` / logical properties, not `left`.
 - Single-file pages: a generic class (`.scrim`) reused by a fixed overlay (cart backdrop) leaked position/blur/z-index into a section → prefix component classes (`cart-scrim`, `soil-scrim`).
+- Scaling a layer that carries its own backdrop gradient showed the rectangle edges → transform the content wrapper, never the layer with the gradient. Sticky-backdrop fallbacks: feather each caption backdrop top and bottom.
+- Overlays that must zoom with a cover-cropped photo: a camera box sized `max(100vw, 177.78vh)` (16:9) so % positions equal image coordinates.
+- Schedules with no confirmed days: show the grid with `--:--` and one tag, but avoid implying days that may be closed (e.g. Shabbat) — flag it.
+- Full-screen colour per object: mid-tint field + saturated object + ink text (the same hue for both makes the object vanish). A colour flood from a contact point = clip-path circle whose origin comes from the SVG camera's projected coordinates.
+- An `<img>` with width/height attributes whose width is set from JS kept its old height (squashed) → `height:auto`.
+- Two-layer drawings (surface / inside): clip the inside layer to the building and ground only (the sky stays normal); put the clip on a wrapper group when the scene is reused with `<use>`.
+- Long pinned stories (>4 chapters): place each beat inside the camera's arrival-and-hold window for that chapter, derived from the same timeline — beats timed independently drift and play after the camera has left.
+- No-JS fallback with wide/top caption plates: stack those chapters (plate above its still crop) instead of side by side.
+- RTL kanban / wide tracks: a track wider than its viewport anchors to the right in RTL, so pan maths and `offsetLeft` measurements break → give the track `direction:ltr` (content rtl inside) or anchor it left explicitly.
+- Varying beats inside one product window: zoom around a focus point (mind the transform-origin maths), slide the window aside for a document to grow out, and fade elements you no longer need to make room.
+- Neighbouring chapters: one chapter's closing colour must differ from the next chapter's opening colour, or two bands merge.
+- A wall with a door-shaped hole to push the camera through: a rounded frame with a huge `box-shadow` spread as the wall, scale the wall around the frame centre; a door leaf rotated past ~85° on `rotateY` swings over the wall on the far side of the hinge — stop at ~80°.
+- Gamified pages (puzzles, countdowns): clues use only confirmed facts; a fake timer never reads as a success rate — say in the footer it is scroll-driven, not real.
+- Stacking panels: `overflow: clip` on each panel so hanging decorations don't leak into the one above; pinned stage content taller than (viewport − header) is only caught by screenshots — check it.
+- A transform on a hero wrapper makes it the containing block for absolute/fixed children — captions positioned to the page landed above the viewport.
+- A "hold" at t≈0 produces a dead step when the page returns to the top — start the first motion at t=0.
+- Accessories drawn beside a product (cup, jug, case) imply they are in the box — list them.
+- Countdown sequences ("3, 2, 1") reorder under RTL bidi — spell them in words or isolate them with `<bdi>`.
+- A pinned runway that starts with the hero, under an in-flow sticky header, sits one header-height low at scroll 0 (the object gets cut at the fold) → negative top margin equal to the header height.
+- The global `img{max-width:100%}` rule caps an intentionally widened/offset photo → override it on that image.
+- An inline SVG's own height beats the parent's `aspect-ratio` → position the SVG absolutely inside the ratio box.
+- A portal/clip opening that finishes before its pin ends = dead scroll → map progress over the whole pinned span.
+- RTL drawers open from the inline-end side (left in Hebrew).
+- Muted second headline lines still need ≥ 3:1 contrast — check them. Labels are `<p>`, not `<h2>`.
+- Sections sized by viewport height also play while scrolling IN — drive floods/draw-ons from entry progress when the pin starts late, or the screen looks empty on phones.
+- Baking pinned SVG drawings for no-JS: expose `window.__bake()` returning each beat's SVG, call it from a build script in headless Chrome (cdp.mjs `ev`), inject the results into the HTML.
+- Image budget spent and the client wants more photography: reuse generated variants and crops, use drawn motifs/type chapters, and report the gap.
+- One photo carrying several chapters (image budget): vary crop, colour, caption position and camera per chapter; when a rejected generation eats the budget, never cut the hero view — drop the view that can be rebuilt from crops.
+- Short product names in huge thin type: wide tracking is the lever for width, not only size.
+- Several scenes from a 3-prompt budget: generate ONE detailed still life, upscale it 4×, and use macro crops as separate full-screen worlds.
+- Relighting a bright studio photo to low-key dark: multiply a dark tone, then add a hand-painted light map with `screen`; don't re-generate.
+- Two pinned sections back to back show two half-frames at the hand-off → merge one camera story into one pin.
+- A sticky overlay with `inset:0` slides in early → use `top:0` only with `inset:auto`.

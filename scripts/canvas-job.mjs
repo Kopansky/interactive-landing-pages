@@ -30,7 +30,7 @@ const res = await b.ev(`(async function(){
   };
   await job(images, util);
   return outs;
-})()`);
+})()`, 300000); // pixel jobs on 2000px images can take minutes
 await b.close();
 if (!Array.isArray(res)) { console.error(res); process.exit(1); }
 for (const o of res) { const f = path.join(outDir, o.name); fs.writeFileSync(f, Buffer.from(o.data, 'base64')); console.log(`${f}  ${Math.round(fs.statSync(f).size / 1024)} KB`); }

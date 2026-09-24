@@ -16,7 +16,9 @@ function findChrome() {
 }
 
 export async function open({ url, W = 1440, H = 900, nojs = false, reduce = false, workdir = os.tmpdir() }) {
-  const udd = fs.mkdtempSync(path.join(workdir, 'ilp-prof-'));
+  // Chrome fails to start when its profile path is too long (Windows path limit) — fall back to the system temp folder
+  let base = path.resolve(workdir); if (base.length > 110) base = os.tmpdir();
+  const udd = fs.mkdtempSync(path.join(base, 'ilp-prof-'));
   const chrome = spawn(findChrome(), ['--headless=new', '--remote-debugging-port=0', '--user-data-dir=' + udd,
     '--hide-scrollbars', '--disable-smooth-scrolling', '--no-first-run', '--no-default-browser-check',
     '--disable-extensions', '--disk-cache-size=1', '--window-size=' + W + ',' + H, 'about:blank'], { stdio: 'ignore' });
@@ -32,7 +34,7 @@ export async function open({ url, W = 1440, H = 900, nojs = false, reduce = fals
     } catch {}
     await sleep(200);
   }
-  if (!list) throw new Error('Chrome did not start (no DevToolsActivePort in ' + udd + ')');
+  if (!list) { try { chrome.kill(); } catch {} await sleep(500); try { fs.rmSync(udd, { recursive: true, force: true }); } catch {} throw new Error('Chrome did not start (no DevToolsActivePort in ' + udd + ')'); }
   const ws = new WebSocket(list.find(t => t.type === 'page').webSocketDebuggerUrl);
   await new Promise(r => (ws.onopen = r));
   let id = 0; const pend = new Map(); const logs = [];
@@ -47,9 +49,9 @@ export async function open({ url, W = 1440, H = 900, nojs = false, reduce = fals
   // if Chrome drops the socket, settle every pending call so nothing awaits forever (Node would exit before cleanup)
   ws.onclose = () => { for (const r of pend.values()) r({ error: 'socket closed' }); pend.clear(); };
   const send = (method, params = {}) => new Promise(r => { const i = ++id; pend.set(i, r); try { ws.send(JSON.stringify({ id: i, method, params })); } catch { pend.delete(i); r({ error: 'socket closed' }); } });
-  const ev = async js => {
+  const ev = async (js, timeout = 20000) => {
     // never wait forever on one evaluation (a stuck page would otherwise hang the run and leak the profile)
-    const r = await Promise.race([send('Runtime.evaluate', { expression: js, awaitPromise: true, returnByValue: true }), sleep(20000).then(() => ({ result: { exceptionDetails: { text: 'evaluate timed out' } } }))]);
+    const r = await Promise.race([send('Runtime.evaluate', { expression: js, awaitPromise: true, returnByValue: true }), sleep(timeout).then(() => ({ result: { exceptionDetails: { text: 'evaluate timed out after ' + timeout + 'ms' } } }))]);
     if (r.result?.exceptionDetails) return 'EVALERR ' + (r.result.exceptionDetails.exception?.description || r.result.exceptionDetails.text);
     return r.result?.result?.value;
   };

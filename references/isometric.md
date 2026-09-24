@@ -266,3 +266,17 @@ With JS off, the page shows the finished drawing, text included. It was checked 
 - Zoom cap relaxes when the subject has its own detail (a lifted soil block held up at 3×).
 - Caption column on a pinned stage: size it so the hero h1 fits on two lines.
 - Drawn product: keep invented design minimal (plain faces, one screen, no connectors) and label it.
+
+## Holes, liquids, tiles, dusk (from the pool test)
+- A hole in the ground: only the far +y and +x inner walls are visible; keep a fixed order; soil-layer decals use offsets relative to each piece's corner (world offsets draw bands outside the model).
+- Liquid filling a container: semi-transparent, drawn after the far walls and before the near ones, or its sides paint over the wall tops.
+- Rows of tiles/panels: one polygon per tile with a gap showing the base colour as grout — cheap and reads well when filled row by row.
+- Dusk: mix each colour's top/left/right tones by different amounts, darken props less, light windows warm — mixing everything toward one tone turns the scene grey.
+- Captions over a background that changes from light to dark: switch the text colour from the background's progress, not from which caption is showing.
+- RTL: fit-region boxes are measured from the left edge; decide the subject's side explicitly.
+- A solid that is behind some objects and in front of others (a machine head overhanging a cup bay): split it into parts (tower / base / head) with absolute keys.
+- Recolour by classes with `var()` fills when the scene is reused via `<use>` or re-rendered live — one variable change recolours every copy.
+- Fit-region cameras happily zoom 3–4× on small subjects: cap close-ups (~2× the hero scale).
+- Pinned world from frame one: the diamond's top corner collides with a centred headline — use a side column or the sky triangle; captions are timed from the camera's arrival; phone zoom ≈2× desktop or the world is a strip.
+- Trees on terraced hills (stacked cylinders): default `on:` sorting draws hill trees after all levels, so back-half trees paint over higher terraces — use a per-tree `kb` or front-half placement.
+- No-JS stage fallback: caption first in DOM flow (or `order:-1`) and cap the SVG height, or the headline falls below the fold.
