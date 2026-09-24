@@ -35,7 +35,7 @@ The homepage has the big spine; inner pages get **one signature moment each** fr
 - Anchor links from the homepage chapters to the matching inner pages.
 
 ## 5. Build
-- **Static test / small site (≤ 8 pages):** plain multi-page HTML sharing `assets/site.css` + `assets/site.js`; each page ≤ one page-specific `<script>`. Relative links (works on file:/// and any host).
+- **Static test / small site (up to ~15 pages incl. legal + 404):** plain multi-page HTML sharing `assets/site.css` + `assets/site.js`; each page ≤ one page-specific `<script>`. Relative links (works on file:/// and any host).
 - **Real project:** recommend Astro (static, component-based, easy to hand to a CMS) or the client's CMS (WordPress/Webflow) — build the design system as components/partials first, then pages. Say which in the report; don't install a framework in a test without being asked.
 - **SEO basics per page:** unique `<title>` and meta description, one h1, `lang`/`dir`, Open Graph title/description, canonical placeholder, `sitemap.xml` + `robots.txt` listing the real pages.
 - **Shared behaviour** (header states, menu, FAQ, forms, cart) lives in `site.js` once; page-specific scroll moments live on their page.
@@ -54,8 +54,22 @@ The homepage has the big spine; inner pages get **one signature moment each** fr
 - **Pages named after two things** ("Rooftop & breakfast") must keep them in separate sections, so the page doesn't imply they happen in the same place.
 - **Scrubbed colour changes** (sunset, day→night): caption colour follows the scene (a class toggled at the midpoint), checked at 375.
 - **FAQ pages** may answer from confirmed brief facts; only the unknowns are placeholders.
-- **Placeholder domain:** `https://www.example.com` in canonical, sitemap.xml and robots.txt, listed as a launch blocker.
+- **Placeholder domain:** `https://www.example.com` (or the local TLD, e.g. `example.co.il`) in canonical, sitemap.xml and robots.txt, listed as a launch blocker.
 - **Header over dark heroes:** check the current-page style stays visible on every hero background.
 - **Mobile between rounds:** after each fix round, take a quick 375 contact sheet of the changed pages; don't wait for the final walk.
 - **Verification cost:** ~30 walks take ~25 minutes, so run them in parallel (separate `--workdir` per run). Walk every page at 1440 and 375, and run --nojs/--reduce once per template.
 - **Serving:** multi-file sites need a server that sends `text/css` (scripts/serve.mjs does). A raw server that sends `.css` as octet-stream makes Chrome drop the stylesheet, so the pages look unstyled.
+
+## 8. Lessons from the law-firm full-site test
+- **Thin briefs:** when a service is known only by name, the service template becomes mostly placeholders, and near-empty pages look like SEO doorway pages. Either merge the services into one Areas page with anchored sections, or build the pages and list the missing copy as the first question for the client. Per-service FAQs only when the brief has service-specific questions.
+- **What "vary per page" means on sibling pages:** vary at least three of: camera move, hero alignment, numeral/visual placement, section order, section theme (dark/light). Identical steps and sibling blocks in the same order on every page still read as cloned.
+- **A fixed image set** (e.g. 6 approved photos for 13 pages): write a photo-usage plan (page → photo, crop, camera move) so no two adjacent pages open on the same frame, and each service keeps the photo it had on the homepage. Only generate new images if the client asks.
+- **Regulated inner pages:** a disclaimer on every service page, the licence number in the footer, and a note on About/Office photos that they aren't the actual office unless confirmed.
+- **Partials:** assemble pages from `work/src/` partials with a small build script (header, footer, menu in one place) so they can't drift. Keep `linkcheck` and `walk-all` scripts in `work/` (walk-all runs 3 at a time).
+- **`Site.stage` API:** `Site.stage(el, (p, el) => {...})` gets the element's pinned progress 0..1 from the shared loop; the camera move is `Site.camera(img, from, to)` with {x, y, scale} keyframes. Write the API down in design-system.md.
+- **Menu:** the footer carries the full nav, so the site works without JS; the menu sheet is `inert` while closed, traps focus while open, closes on Esc. Mark the parent as current on child pages (area pages → "Areas").
+- **404:** it can't be tested on file://, and relative links break on deep paths on a real host. Use root-relative links in the 404 at launch.
+- **Signature moments on phones:** a pinned photo that becomes static on mobile needs a replacement (a crop change or crossfade per question), never nothing.
+- **CSS traps:** a rule like `.x > *:not(.bg){position:relative}` silently cancels absolutely positioned labels. A relative `url()` inside a CSS custom property resolves against the stylesheet unreliably, so set background images inline.
+- **walk.mjs body size:** it reports 0 when every paragraph sits inside pinned captions. Check body size by hand on those pages.
+
