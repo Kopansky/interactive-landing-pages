@@ -181,7 +181,7 @@ function fit(region, box, vw, vh){ // region/box = {x,y,w,h}; box in screen px
 - **Label the world:** a small "Illustration" note on the drawing + a footer line; list what the drawing implies (window count, balcony, signage) in the report.
 
 ### Multi-keyframe photo camera
-Keyframes of {scale s, focus cx, cy (0–1 of the image)}; interpolate s geometrically and the focus linearly; translate = -s·(c − 0.5)·size, clamped to ±(s − 1)/2·size so the image edge never shows. Portrait phones see ~26% of a 16:9 frame — write separate focus points for portrait. Keep zoom ≤ ~1.5–1.9× on 2000px sources.
+Keyframes of {scale s, focus cx, cy (0–1 of the image)}; interpolate s geometrically and the focus linearly; translate = -s·(c − 0.5)·size, clamped to ±(s − 1)/2·size so the image edge never shows. Portrait phones see ~26% of a 16:9 frame — write separate focus points for portrait. Keep zoom ≤ ~1.5–1.9× on 2000px sources — on portrait phones cover-scaling a 16:9 photo already zooms ~2.7×, so use a camera box (e.g. top 60% of the screen) and separate phone zoom values per stop. Overlays (rings, stickers) live in image coordinates so they ride along.
 Plan a **shot list before generating**: matching light, grade and screen direction across photos, and one photo containing the next (a window that shows the next scene) if the camera must travel through it.
 No-JS / reduced motion for photo stages: sticky backdrops — `.ph{position:sticky;top:0;height:100vh}` + `.ph + .cap{margin-top:-100vh}` — so each caption scrolls over its own photo instead of one photo stretching over several captions.
 
@@ -197,6 +197,9 @@ Keep the camera centred on the destination during the dive so the portal circle'
 - Objects riding a path: clamp the angle to ±90° and flip the normal, or they turn upside down on right-to-left runs (the RTL default).
 - "Plays with scroll" (instruments, machines): beats at integer scroll positions, a decaying hit envelope measured from the last beat, vibration as a lens shape between ± amplitude.
 
+### Vehicles on a path (truck, car, bike)
+Map scroll to a target screen height (e.g. 60%) and look up the matching point on a path that only ever goes down — stability and reversal come free (flat stretches make the rider jump sideways; keep them short). Use two drawn views (side on curves, front/back on straights) switched by the path angle, cap the tilt (~24°), turn wheels with distance, un-mirror lettering when the view flips. Crossing a pinned stage: three path pieces (before the pin / inside the stage / after), the rider lives in whichever contains its target height; the parking spot inside the stage must sit exactly at that height. Drawings sit UNDER the road+rider layer, text above them.
+
 ### Path over photography (a line that runs through photos)
 - Pick anchor points in each photo (the track, the aisle, the stream) in image coordinates; map them to screen with the same object-fit/object-position maths as the crop, so the line stays on them at any size.
 - Inside a zoomed/pinned photo, put an SVG sized to the photo inside the zoomed wrapper so the line zooms with it; draw page-space segments separately (a sticky stage breaks a line drawn in page space).
@@ -210,6 +213,12 @@ Keep the camera centred on the destination during the dive so the portal circle'
 - Inline masks as data URIs; keep the mask aligned with the photo's crop at every breakpoint.
 - Design image prompts around the interaction: empty space where the RTL text sits, key-able colours, the subject centred for 16:9 and phone crops.
 
+### Product photo parts (battery out, lid off) and borderless studio shots
+- Flatten the generated studio background to exactly the page colour and smooth its grain (canvas-job) so a full-bleed product never shows a box; set the page background to that colour.
+- Pull a part out of one photo: cut it along its own axis into a transparent layer, keep the objects in front of it (chainring, handle) as a separate top layer, rebuild hidden sections by repeating along the part, paint the empty bay underneath.
+- Generate every later product view with the first product shot as the reference image; on a single-product page the generated photo IS a spec claim (drivetrain, clips, accessories) — list it.
+- Spine budget for a product story: ~0.8–1 viewport per beat.
+
 ### One neutral product, many looks
 Generate ONE blank product (white can, plain bottle, blank box) on white; tint it with `mix-blend-mode: multiply` over each colour field and wrap your own HTML/SVG label on it (lay the photo's highlights/condensation back over the label with `screen`/`luminosity`). Avoids brand text in generated images and keeps every variant consistent. Multiply only blends with the element's own backdrop — a transform, `isolation`, or `container-type` on an ancestor creates a new stack and the product turns invisible or boxed.
 
@@ -217,6 +226,7 @@ Generate ONE blank product (white can, plain bottle, blank box) on white; tint i
 - Put the traveller in a fixed layer that is a direct child of `body` (a fixed element inside a section can be trapped under later sections by stacking contexts).
 - Keyframes in document scroll positions; some anchored to moving elements (read their rect each frame). Pinned chapters are "programs": functions of the chapter's own progress returning position, scale, rotation and any sub-parts (gimbal angle, camera footprint).
 - Weighted follow (recipe #3) for the lag; bank/pitch from scroll velocity; reverse cleanly on scroll up.
+- If the traveller must vanish (absorbed, merged into rain) and return, make the hand-off visible (it re-forms at a named source) so it still reads as one object. Moving between two scrolling anchors can make a fixed traveller drift UP on screen while it still falls relative to the page — expected. A scroll-linked end moment in the last section must fit the scroll actually left above the footer.
 - Always-running parts (props, wheels) must not hide dead scroll: support a `?still` flag and run walk.mjs with `--pause-animations`.
 
 ### Fly to a target (objects into a shield, cart, phone row)
@@ -285,3 +295,8 @@ Section numbers only count up from 0; rolling digits settle into whole positions
 - A sliced SVG with `overflow: visible` showed its cropped-out parts over the text above → `overflow: hidden` on sliced SVGs.
 - No-JS for a staged finale (concert lights, a finished build): show the finished state; the "hero framing" rule applies to the hero only.
 - `position: sticky` + `margin-bottom: -100vh` spilled the stage (and header) 100vh into the next section → put the sticky element inside an absolutely positioned track instead.
+- Caption crossfades: outgoing ~0.28s, incoming delayed 0.15–0.2s, and phone beats ≥ 70vh — otherwise screenshots show overlapping text and checks flag partial opacity.
+- Container-query height units (`cqh`) inside a column without a fixed height resolved to 0 in no-JS/reduced-motion (not pinned) → size with viewport units or give the container a height.
+- Patching files with JS `String.replace`: `$$`, `$&` in the replacement are special patterns (`$$(` became `$(`) → use a replacer function.
+- RTL: a flowing image wider than the screen is aligned to the right edge and crops the subject off the left → position with `margin-inline-start` / logical properties, not `left`.
+- Single-file pages: a generic class (`.scrim`) reused by a fixed overlay (cart backdrop) leaked position/blur/z-index into a section → prefix component classes (`cart-scrim`, `soil-scrim`).

@@ -247,3 +247,22 @@ With JS off, the page shows the finished drawing, text included. It was checked 
 - **Dollhouse cutaways:** fractional `layer` values (e.g. −0.5) for low partitions, and front "cut wall" curbs as an overlay layer.
 - **Labels in scenes:** put text on floors only where no wall or furniture is drawn over it; prefer HTML chips anchored to projected points.
 - **Configurators on phones:** keep the drawing sticky above the controls.
+
+## Big objects, sky and live recolouring (from the drone test)
+- A screen-scale object (drone, plane) can't live at world scale: render it at its own scale, derive its altitude from a target screen height, and project its shadow/cone into viewport space.
+- The diamond leaves two empty sky triangles: put headlines and floating HUD there.
+- Behind captions over a bright world use a soft elliptical halo, not a full-height fade (it bleaches half the scene).
+- Measure zoom against the wide shot you actually use; district shots land at ~2.2–2.5× of a whole-island shot.
+- Recolouring baked faces live (thermal panels, highlighted tiles): render with marker colours, rewrite them to `data-` attributes after rendering, then drive fills from CSS/JS.
+- Iso diamond → flat square tile: CSS rotate(45°) + scaleY(~1.73) morph.
+- Smooth ONE timeline value and derive camera, rider, cone and shadow from it — smoothing each separately breaks alignment.
+
+## Fresh/bright premium, ground cutaways, water (from the irrigation test)
+- Bright brands: white model plinth, one hue family for living things, the accent (water blue) only for the element it represents.
+- A ground that opens: split plinth/lawn around the hole with fixed sort keys; draw only the above-ground part of the lifting block; dark decals on the hole's inner walls. Use single pieces when closed (split pieces show hairline seams at 1:1) or add a same-colour stroke on ground faces.
+- Floating white objects vanish on a white page → tint their top tone.
+- Clouds: an extruded outline of overlapping circles reads premium; clouds of balls read toy-like.
+- Flowing water: light a line with a dash on `pathLength=1`, beads = small solids moved along the line.
+- Zoom cap relaxes when the subject has its own detail (a lifted soil block held up at 3×).
+- Caption column on a pinned stage: size it so the hero h1 fits on two lines.
+- Drawn product: keep invented design minimal (plain faces, one screen, no connectors) and label it.

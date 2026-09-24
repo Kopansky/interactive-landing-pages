@@ -214,7 +214,7 @@ Conventions:
 
 ### Drawn / illustrated (Figma, Clay, isometric)
 - **Tokens:** white or oat canvas; 3–5 flat companion hues + ink; outlines 1.5–3px or none (pick one).
-- **Motion:** shapes that re-cut, drop, rise with a small overshoot; draw-on; one character or object system used large. Keep one drawing per section — clients call busy drawn pages "cluttered".
+- **Motion:** shapes that re-cut, drop, rise with a small overshoot; draw-on; one character or object system used large. Keep one drawing per section (for path/world spines: one continuous world, one focal action per screen) — clients call busy drawn pages "cluttered".
 
 ### Playful (Ctrl, Jeton, Slack's blocks)
 - **Tokens:** one saturated field colour or 3–4 pastels; thick radii (24–40) and pills; big type (rem scaled to viewport).
