@@ -41,7 +41,8 @@ export async function open({ url, W = 1440, H = 900, nojs = false, reduce = fals
     if (m.id && pend.has(m.id)) { pend.get(m.id)(m); pend.delete(m.id); }
     if (m.method === 'Runtime.consoleAPICalled' && /error|warn/.test(m.params.type)) logs.push(m.params.type + ': ' + m.params.args.map(a => a.value ?? a.description).join(' '));
     if (m.method === 'Runtime.exceptionThrown') logs.push('EXC: ' + (m.params.exceptionDetails.exception?.description || m.params.exceptionDetails.text));
-    if (m.method === 'Log.entryAdded' && /error/.test(m.params.entry.level)) logs.push('LOG: ' + m.params.entry.text + ' ' + (m.params.entry.url || ''));
+    // the browser's own favicon request is not the page's fault
+    if (m.method === 'Log.entryAdded' && /error/.test(m.params.entry.level) && !/favicon.ico/.test(m.params.entry.url || '')) logs.push('LOG: ' + m.params.entry.text + ' ' + (m.params.entry.url || ''));
   };
   // if Chrome drops the socket, settle every pending call so nothing awaits forever (Node would exit before cleanup)
   ws.onclose = () => { for (const r of pend.values()) r({ error: 'socket closed' }); pend.clear(); };

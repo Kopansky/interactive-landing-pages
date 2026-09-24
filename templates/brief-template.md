@@ -26,6 +26,7 @@
 - Main action and channel (call / WhatsApp / form / booking link) and its number or URL:
 - Address, parking, area served:
 - Hours (incl. Friday/Saturday/holidays):
+- Dates: year + time zone for every date/deadline (needed for any countdown):
 - Form destination (endpoint or "none yet" → form says not connected):
 - Unknown facts (become placeholders + launch blockers):
 - Claims to avoid (outcomes, "best", medical/legal promises, anything implied by images):

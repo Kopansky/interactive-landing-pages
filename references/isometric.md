@@ -234,3 +234,16 @@ With JS off, the page shows the finished drawing, text included. It was checked 
 11. Domes and balls are flat 2-tone discs: they don't show yaw, and they sort by their centre point.
 12. **Every prop is an implied fact.** A pot says "we cook on site", six stools say "groups of six", a second van says "two vehicles", a lift says "we have a lift". Draw only what the brief confirms, and keep the others generic (crates, plants).
 13. Everything in the scene has to come from the state, with no `Date.now()` or randomness per frame (use a seeded helper). Otherwise the bake and the live page disagree, and the scene flickers while scrolling.
+
+## Premium (serious) isometric
+- Near-monochrome solids (stone/navy) with ONE accent on the key object; no outlines; rise/drop with ease-in-out and no overshoot (bounce reads as toy).
+- Cutaway stacked floors hide each other: lift the storeys above the current floor and empty the floors below; bake each floor as an isolated room for no-JS stills (cropping the full stack gives hard cuts).
+- Fading a solid makes its own faces see-through while it fades — fade whole groups over a solid backdrop, or fade the group's `<g>` opacity instead of each face.
+- Phones: let rooms crop past the screen sides rather than fitting the whole scene to the width.
+
+## No-JS state, camera and labels (from tests)
+- **What to bake:** a static scene → the finished state. A before→after story (mess → clean, bare roof → panels) → bake the hero in its START state plus one still per step in that step's END state. Never one baked image for both.
+- **Keep the subject clear of the text:** `ISO.camera` places the subject by a fraction only; for a subject that must land in a free region (text on the other side) use the fit-region camera from motion-recipes §15 on the projected bounds.
+- **Dollhouse cutaways:** fractional `layer` values (e.g. −0.5) for low partitions, and front "cut wall" curbs as an overlay layer.
+- **Labels in scenes:** put text on floors only where no wall or furniture is drawn over it; prefer HTML chips anchored to projected points.
+- **Configurators on phones:** keep the drawing sticky above the controls.

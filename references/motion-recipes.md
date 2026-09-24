@@ -171,10 +171,31 @@ function fit(region, box, vw, vh){ // region/box = {x,y,w,h}; box in screen px
   return { x: region.x - (box.x / s), y: region.y - (box.y / s), w: vw / s, h: vh / s }; } // → viewBox
 ```
 - **Text over a moving drawing:** put copy on solid panels that scroll over it, or over a flat sky zone the camera keeps clear — never over busy detail.
-- **No-JS default = the hero framing,** not the finished scene (a raised sea/sun behind the hero text is a mess); raise end states from JS for reduced motion.
+- **No-JS default = the hero framing** (for before→after stories: hero in its start state + one still per step in its end state), not the finished scene (a raised sea/sun behind the hero text is a mess); raise end states from JS for reduced motion.
 - **Reduced motion for one pinned drawing:** show a still crop of the finished drawing per chapter (one `<svg><use href="#world"/></svg>` with a different viewBox each).
 - **Build scripts are allowed:** generate the SVG with a Node script and inline it, so the page stays one self-contained HTML file with the drawing baked in.
+- **Cutaways:** plan the reveal layers into the drawing from the start (a clamshell bonnet, a wing panel that fades) — in side view the interesting part is often behind something.
+- **One state function:** write the animated states as one self-contained function of progress; the page runs it live and the build script reuses it to bake no-JS/reduced-motion stills.
+- **3 tones on a curved object without outlines:** horizontal light/base/shade bands clipped to the object's outline.
+- **Wide objects on portrait phones:** let the hero crop bleed past the screen edge and add a pan along the object as its own beat.
 - **Label the world:** a small "Illustration" note on the drawing + a footer line; list what the drawing implies (window count, balcony, signage) in the report.
+
+### Multi-keyframe photo camera
+Keyframes of {scale s, focus cx, cy (0–1 of the image)}; interpolate s geometrically and the focus linearly; translate = -s·(c − 0.5)·size, clamped to ±(s − 1)/2·size so the image edge never shows. Portrait phones see ~26% of a 16:9 frame — write separate focus points for portrait. Keep zoom ≤ ~1.5–1.9× on 2000px sources.
+Plan a **shot list before generating**: matching light, grade and screen direction across photos, and one photo containing the next (a window that shows the next scene) if the camera must travel through it.
+No-JS / reduced motion for photo stages: sticky backdrops — `.ph{position:sticky;top:0;height:100vh}` + `.ph + .cap{margin-top:-100vh}` — so each caption scrolls over its own photo instead of one photo stretching over several captions.
+
+### Zoom through a window into the next photo
+Measure the window as fractions of the photo; map them to the screen with the object-fit: cover maths; the next photo sits in a layer shaped like the WINDOW (not the viewport — on portrait phones a viewport-shaped layer shows as a strip) and its transform is tied to the facade camera; interpolate zoom in log space. Zoom-through portals are exempt from the zoom cap (the next photo replaces the soft one). Prompt for it: one centred window, symmetric one-point perspective.
+
+### Globe/map → dive into a photo
+Keep the camera centred on the destination during the dive so the portal circle's centre stays fixed; zoom the globe exponentially; stop redrawing the canvas while the photo covers it; give each destination a short "close" beat before the next flight. Canvas text in RTL: set `ctx.direction = 'rtl'` and put labels on the far side of the dot for nearby places. Map outlines: low-poly, labelled "illustrative map", no disputed borders.
+
+### A line through pinned stages, parallel lines, riders
+- One segment per section, each meeting its neighbours at a fixed x; a "head" position keeps moving while a stage is pinned (e.g. 70% → 100% of the screen) so riders hand over between sections without a jump.
+- Parallel lines along a curve (staff, rails, lanes): sample the path, offset along the normal, draw each with `pathLength=1` so they draw on together.
+- Objects riding a path: clamp the angle to ±90° and flip the normal, or they turn upside down on right-to-left runs (the RTL default).
+- "Plays with scroll" (instruments, machines): beats at integer scroll positions, a decaying hit envelope measured from the last beat, vibration as a lens shape between ± amplitude.
 
 ### Path over photography (a line that runs through photos)
 - Pick anchor points in each photo (the track, the aisle, the stream) in image coordinates; map them to screen with the same object-fit/object-position maths as the crop, so the line stays on them at any size.
@@ -182,6 +203,44 @@ function fit(region, box, vw, vh){ // region/box = {x,y,w,h}; box in screen px
 - Rebuild the page-space path after fonts load, images load and on resize; anchors reveal by opacity only (no translate), or the line lands in the wrong place.
 - A thin line over photos: dark edge + light core, so it reads on sky and shadow. No-JS: the line may simply be absent.
 - Zoom a photo at most ~source width / viewport width (2.5× on a 2000px source was soft).
+
+### Recolouring part of a photo (nails, a car body, a wall)
+- Generate the photo with the region in a colour that is easy to key out (e.g. cobalt nails), then build in Chrome canvas: a region mask (smoothed + dilated 1–2px), a highlight mask and a greyscale shading map.
+- Each new colour = flat colour layer + shading map with `mix-blend-mode: luminosity`, revealed by a sweeping gradient mask; don't brighten edge pixels (white halos).
+- Inline masks as data URIs; keep the mask aligned with the photo's crop at every breakpoint.
+- Design image prompts around the interaction: empty space where the RTL text sits, key-able colours, the subject centred for 16:9 and phone crops.
+
+### One neutral product, many looks
+Generate ONE blank product (white can, plain bottle, blank box) on white; tint it with `mix-blend-mode: multiply` over each colour field and wrap your own HTML/SVG label on it (lay the photo's highlights/condensation back over the label with `screen`/`luminosity`). Avoids brand text in generated images and keeps every variant consistent. Multiply only blends with the element's own backdrop — a transform, `isolation`, or `container-type` on an ancestor creates a new stack and the product turns invisible or boxed.
+
+### One object that travels the whole page (drone, car, bird, parcel)
+- Put the traveller in a fixed layer that is a direct child of `body` (a fixed element inside a section can be trapped under later sections by stacking contexts).
+- Keyframes in document scroll positions; some anchored to moving elements (read their rect each frame). Pinned chapters are "programs": functions of the chapter's own progress returning position, scale, rotation and any sub-parts (gimbal angle, camera footprint).
+- Weighted follow (recipe #3) for the lag; bank/pitch from scroll velocity; reverse cleanly on scroll up.
+- Always-running parts (props, wheels) must not hide dead scroll: support a `?still` flag and run walk.mjs with `--pause-animations`.
+
+### Fly to a target (objects into a shield, cart, phone row)
+Measure each object's start rect and target rect with transforms off (on load and resize), then interpolate translate/scale between them by beat progress; use a different target on phones. A continuous element (progress bar/rail) must stay visible on phones too, or dead scroll returns.
+
+## Dates, countdowns and deadlines
+- Required facts: the year and the time zone (default: the business's). No year → no countdown; say so in the report.
+- Decide and document whether a deadline day counts ("until 1 Feb" = last valid day), singular/plural wording, and what each element shows after its date passes (tier greyed and struck, "has closed", event-day state).
+- Daily cut-offs ("order by 12:00"): decide which days they apply, what shows after the cut-off without implying "tomorrow" delivery, and support `?now=HH:MM`; walk once with a frozen `?now=` so a live clock doesn't hide dead scroll.
+- Support `?today=YYYY-MM-DD` for testing and check the edge days (day before, day of, day after) for every deadline.
+
+### Assemble one photo from pieces (bouquet, dish, product)
+Background-remove once → alpha WebP (`compress.mjs in.png out.webp`); cut soft wedges with conic-gradient masks around a pivot; land them one by one; hide seams by stacking "landed so far" and swapping to the unmasked image at the end.
+
+### Pile → layout (receipts into columns, tiles into a grid, cards onto a shelf)
+Let the page's own layout be the FINAL state; compute each piece's offset from a seeded "pile" position and animate the offset to 0 by beat progress. No-JS, reduced motion and the end state then come for free. Put shadows on a wrapper when the piece is clip-pathed (zigzag receipts clip their own shadow).
+
+### Numbers as the image
+Section numbers only count up from 0; rolling digits settle into whole positions quickly (a paused roll must never read "49" for "04"); a price never rolls through other values (₪0 passing ₪8 implies a price). Sample documents (receipts, forms, payslips): say "not an official form", keep the maths consistent, no years, and treat rates (VAT %) as legal facts to confirm.
+
+## Type as image
+- Fit text to width by measuring once (`scrollWidth`) and scaling font-size, not transform (`will-change: transform` on scaled text blurs it).
+- Odometer digits: each cell `height:1em; line-height:1em; overflow:clip`, a column of 0–9 translated by -n em.
+- Set the size on the heading element, not only on inner spans (checks and screen readers read the heading).
 
 ## 16. Things that broke in practice (check each)
 
@@ -210,3 +269,19 @@ function fit(region, box, vw, vh){ // region/box = {x,y,w,h}; box in screen px
 - A later `@media` rule silently beat a mockup's `@container` rule (video half-width on phones) → keep container-query rules last, or scope media rules away from mockup internals.
 - A section `padding` shorthand wiped the `.wrap` side gutters on phones → set only `padding-block` on sections.
 - Assembling a product window on a pinned stage: stagger pieces within a beat, never overlap two beats' fades, start the first piece before the pin so the stage never opens empty, keep one continuous element (progress bar) moving.
+- Stacking panels with no hold: each panel was covered the moment it arrived → give every panel a hold (~0.6–0.8 viewport of margin) with something scroll-linked inside it (slow zoom, progress bar); compute the LAST panel's hold separately or it becomes dead scroll.
+- Aperture/letterbox hero: put the hero copy inside the letterbox bar and size the bars from the copy height, so headline, CTA and trust line are on screen from frame one.
+- Header over mixed sections (photo / light / dark): three header states, switched per section — a transparent header shows content through it on plain dark sections.
+- Hebrew labels for actions: use nouns (אימוץ, אומנה, התנדבות, תרומה), not infinitives — prefixed verbs produce non-words.
+- A `.pin` state class on `<html>` matched a `.pin` stage rule and squashed the page into a 454px column → prefix state classes on `<html>` (`is-pinned`, `has-js`).
+- A tall pinned runway without JS = pure dead scroll → set the runway height only under `html.js` (and not under reduced motion).
+- Absolute stage panels without `isolation:isolate` + explicit `z-index` let an earlier panel paint over a later one.
+- Frameless header: transparent only over photos; over light or dark text sections give it a borderless solid fill, or it overlaps the content.
+- Caption swaps overlapped two titles on phones → never overlap two beats' caption fades (the out-fade ends before the in-fade starts).
+- Lines on a zooming SVG turn chunky → `vector-effect: non-scaling-stroke`. Styling parts inside a reused `<use>` symbol: CSS custom properties DO inherit into it (`fill: var(--part-a)`), so light one part at a time by setting the variable on the `<use>`.
+- Multi-beat pinned scenes: every beat gets a different composition (scale, side, where the name sits), not only "something changes".
+- A reveal class named `.in` collided with a layout class `.in` and changed page height → prefix state classes (`is-in`).
+- A sticky panel inside a pinned story with nothing else moving = dead scroll → keep one continuous element moving through every beat.
+- A sliced SVG with `overflow: visible` showed its cropped-out parts over the text above → `overflow: hidden` on sliced SVGs.
+- No-JS for a staged finale (concert lights, a finished build): show the finished state; the "hero framing" rule applies to the hero only.
+- `position: sticky` + `margin-bottom: -100vh` spilled the stage (and header) 100vh into the next section → put the sticky element inside an absolutely positioned track instead.

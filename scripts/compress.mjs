@@ -1,5 +1,6 @@
 // Resize + re-encode an image to JPEG with headless Chrome (no ImageMagick/Python needed).
-// usage: node compress.mjs <in.png|jpg|webp> <out.jpg> [width=2000] [quality=0.8] [--workdir dir]
+// usage: node compress.mjs <in.png|jpg|webp> <out.jpg|out.webp|out.png> [width=2000] [quality=0.8] [--workdir dir]
+// .webp / .png keep transparency (cut-outs); .jpg for photos.
 // Tip: export 2000w for full-bleed and 1100w for phones, then use srcset. Aim for ≤ 250 KB at 1600–2000w.
 import { open } from './cdp.mjs';
 import fs from 'node:fs'; import path from 'node:path';
@@ -16,7 +17,7 @@ const res = await b.ev(`new Promise(function (done) { var im = new Image(); im.o
   var w = Math.min(${width}, im.naturalWidth), h = Math.round(im.naturalHeight * w / im.naturalWidth);
   var c = document.createElement('canvas'); c.width = w; c.height = h; var g = c.getContext('2d');
   g.imageSmoothingQuality = 'high'; g.drawImage(im, 0, 0, w, h);
-  done({ w: w, h: h, data: c.toDataURL('image/jpeg', ${q}).split(',')[1] }); };
+  done({ w: w, h: h, data: c.toDataURL(${JSON.stringify(out.endsWith('.webp') ? 'image/webp' : out.endsWith('.png') ? 'image/png' : 'image/jpeg')}, ${q}).split(',')[1] }); };
   im.onerror = function () { done({ error: 'could not decode image' }); }; im.src = ${JSON.stringify(dataUrl)}; })`);
 await b.close();
 if (!res || res.error) { console.error(res ? res.error : 'no result'); process.exit(1); }
