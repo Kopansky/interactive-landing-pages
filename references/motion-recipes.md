@@ -252,6 +252,15 @@ Generate ONE blank product (white can, plain bottle, blank box) on white; tint i
 ### Fly to a target (objects into a shield, cart, phone row)
 Measure each object's start rect and target rect with transforms off (on load and resize), then interpolate translate/scale between them by beat progress; use a different target on phones. A continuous element (progress bar/rail) must stay visible on phones too, or dead scroll returns.
 
+### Growing worlds and season changes (from the finance family-tree test)
+- **Full-screen colour changes:** blending two saturated colours directly (yellow→blue, blue→orange) goes through mud-grey. Pass through a light cream at the midpoint, and make the change while the camera is moving.
+- **One drawing, live and still:** drive growth and season with CSS custom properties on the drawing (`--grow`, `--season`). The no-JS stills are `<use>` copies that set their own values, and the defaults give the hero state.
+- **Camera over something that grows:** define the framings in the object's own coordinates, scaled by its current growth, so each framing stays steady while the world changes around it.
+- **Pure camera beats** (pull-backs with no copy) need one giant word (a season, a chapter name), alternating sides, or they read as empty scroll.
+- **Plan what each wide shot reveals:** a finale object placed in the world shows up in every earlier pull-back. Lay the world out around what each camera view may see.
+- **Crossfading plates look faint in screenshots:** judge text from the held frames, and make sure the hold covers at least 30% of the beat.
+- **More stages than services:** map the spare stage to a stated fact, or give it a statement beat. Never invent a service for it.
+
 ## Dates, countdowns and deadlines
 - Required facts: the year and the time zone (default: the business's). No year → no countdown; say so in the report.
 - Decide and document whether a deadline day counts ("until 1 Feb" = last valid day), singular/plural wording, and what each element shows after its date passes (tier greyed and struck, "has closed", event-day state).
