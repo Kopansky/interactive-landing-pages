@@ -23,7 +23,7 @@ Plus always: 404, Privacy / Terms / Accessibility statement (as placeholders if 
 ## 3. Inner pages: quieter, never template
 The homepage has the big spine; inner pages get **one signature moment each** from the same world (a smaller pinned beat, a draw-on, a portal into a photo, an isometric close-up) and otherwise calm, big typography.
 - Each inner page opens with a **page hero**: big headline (≥ 72px at 1440), one line, one visual from the world — not a thin banner.
-- **Service/area pages** share a template: hero → what it is (facts only) → how it works (process steps from the brief) → a signature visual → FAQ for that service (placeholders) → CTA. Vary one element per page (visual, colour, crop) so they don't look cloned.
+- **Service/area pages** share a template: hero → what it is (facts only) → how it works (process steps from the brief; if the brief has none, one "ask us" band with a single placeholder tag, never made-up steps) → a signature visual → FAQ (only the brief's own questions, never new service-specific ones) → CTA. The hero composition must change on every page, plus at least two more of: part/visual, crop, reveal, accent, section order (see §8). On a pinned-spine site the hero and the signature moment can be one short pinned runway (~300vh).
 - **About** without facts = the business's confirmed story only (years, family, location); everything else placeholder. Never invent team members, values or history.
 - **Contact** = the local-business rules (tap-to-call/WhatsApp placeholders, map as illustrative, hours only if confirmed, form "not connected").
 - **FAQ / legal** pages are text pages but still use the type scale and header/footer.
@@ -72,4 +72,12 @@ The homepage has the big spine; inner pages get **one signature moment each** fr
 - **Signature moments on phones:** a pinned photo that becomes static on mobile needs a replacement (a crop change or crossfade per question), never nothing.
 - **CSS traps:** a rule like `.x > *:not(.bg){position:relative}` silently cancels absolutely positioned labels. A relative `url()` inside a CSS custom property resolves against the stylesheet unreliably, so set background images inline.
 - **walk.mjs body size:** it reports 0 when every paragraph sits inside pinned captions. Check body size by hand on those pages.
+
+## 9. Lessons from the garage full-site test
+- **Prove the homepage is unchanged:** screenshot before and after at the same absolute scroll positions (not page fractions, which drift once the footer grows) and diff them. Allowed differences: nav links, links into inner pages, a menu button, a bigger footer.
+- **file:// traps:** link to `services/index.html`, not `services/` (file:// opens a folder listing); external SVG `<use>` doesn't render; the 404's relative links break on a real host.
+- **Per-page accent colours** that override a brief's "one accent" rule are a client decision; record it in `work/site-brief.md` as "supersedes".
+- **Walk exemptions:** the h2 ≥ 56 floor applies to section headlines, not to small label headings ("other services") or legal-page subheadings. Mark those `data-walk="label"`. A phone sticky stage under 50% of the screen isn't counted as pinned; check it on the contact sheet.
+- **Cross-page review sheets:** one image with every page's hero side by side, and one with every service page's signature moment, so cloned compositions show up at a glance.
+- **A page with no content to fill** (e.g. only three FAQ questions): don't build it; put the content on Home and Contact instead.
 
