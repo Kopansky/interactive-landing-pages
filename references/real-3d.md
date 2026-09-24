@@ -38,3 +38,13 @@ Products cross text on narrow screens: give text a solid/gradient band, lay long
 - three.js gotchas: `RoundedBoxGeometry` is already non-indexed (`toNonIndexed` warns — a console error for walk.mjs); `computeVertexNormals` on it gives faceted edges; canvas-gradient floors with a wrong centre show a rectangle.
 - Bake with a render mode (`?render=1` + `window.__render(t, w, h)` returning a JPEG/WebP) and one build script; wide (1600×1000) and tall (900×1200) stills per beat.
 - A sticky buy bar's bottom padding must be constant, not follow the bar's live height (it breaks heightStable).
+
+## More from the medical-cannabis 3D test
+- **Organic objects (buds, plants, food):** build them procedurally from lumpy lobes plus instanced details (calyxes, leaves, hairs, trichomes: thousands via `InstancedMesh`). Phones get about half the instances and no depth of field.
+- **Macro dives:** scale the detail up as the camera arrives, instead of flying the camera into the mesh. Clearing a path for the camera cuts a visible groove.
+- **Morphs between products** (bud → drops → bottle fills; small flowers → jar → lid closes) read as one continuous film; drive them all from the same scroll timeline so they reverse.
+- **No-JS / reduced-motion stills** must keep the page height identical to the WebGL layout (a sticky still per chapter, same runway heights), or heightStable fails.
+- **Render on demand:** render only when progress changes (plus idle motion that `?still` can freeze), so walk.mjs dead-scroll checks stay honest.
+- **Captions near a transparent header over a canvas:** fade them out as they approach the header. Keep captions in the half of the screen the object isn't in; check the frames between beats, where the object moves across.
+- **three.js pitfalls:** `#include` lines in `onBeforeCompile` shaders must sit on their own line; set `customProgramCacheKey` per custom material; glass can't see other glass, so liquids and contents inside glass must be opaque meshes; post-processing depth of field treats a screen-space background mesh as a real plane (render the background as `scene.background` instead).
+- **Weight:** list GPU cost and file size in the report; self-host three.js at launch if the privacy policy requires it.
