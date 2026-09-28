@@ -157,3 +157,12 @@ Products cross text on narrow screens: give text a solid/gradient band, lay long
 - **A portfolio of six inside a pinned film:** pinned rows (~170vh each) with fades; unpinned 100vh rows let captions scroll across the objects. Expect a long page — keep each row moving.
 - **The last chapter** needs a final drift stop, or frames freeze before the footer.
 - Skipping 3D in reduced motion: return from a function; a top-level `throw` in a module counts as a console error.
+
+## Liquid chrome and raymarching (from the agency liquid test)
+- **Morphing into crisp shapes:** metaballs turn blocks and cards into blobs — a raymarched signed-distance scene in a ShaderMaterial keeps shapes crisp while the morphs stay liquid; a procedural studio environment avoids an HDR file.
+- **Compile time on Windows (ANGLE/D3D11):** constant-bound loops and several inlined calls to the distance function made the first compile take ~90 s. Use uniform-bounded loops, one call site (fold normal and AO taps into the march loop), and `renderer.compileAsync` so the stills show meanwhile.
+- **GL starts seconds after load:** early frames run in still mode, so bake stills that match the live poses exactly.
+- **Flat chrome faces read as paint** — add a subtle normal wave or graded environment cards.
+- **How literal each form must be:** check every service shape at thumbnail size on the sheet; a screen stack, a route and a search bar each needed several redesigns before they read.
+- **Sample chips projected onto moving objects** need their own fade curve and phone size.
+- A sticky still inside a block shorter than 100vh with `margin-bottom: -100vh` pins for the whole block — unpin short project stills.
