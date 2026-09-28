@@ -23,6 +23,7 @@ Don't forward the agent's report as proof. For each page:
    - **Text:** no caption crossing the object, no faint or overlapping text, no text under the header.
    - **Not template:** no repeated section layout, no small cards in white, no dashed boxes, no pill header.
    - **Facts:** no invented numbers, reviews, prices or claims; placeholders are small tags.
+   - **Footer:** a designed closing chapter (closing moment from the world, animated giant wordmark, sitemap + contact + socials in readable type, legal row), at least a screen tall — never a thin strip.
    - **Finished:** nothing that looks half-done.
 3. If it fails: SendMessage the same agent with the specific frames and fixes ("frame 5: caption crosses the bud; frame 9: empty screen, bring the object in"). Up to two rounds; then show it with an honest note, or rebuild with a different concept.
 4. If it passes: show the client the link, 3–6 lines on the concept and what scroll does, the launch-blocking placeholders, and the one thing you would still improve.
