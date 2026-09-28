@@ -293,6 +293,7 @@ Measure each object's start rect and target rect with transforms off (on load an
 - Fake contact shadows as blurred bars on the base; accordion folds alternate ±2θ; an SVG drawn "on" a 3D plane needs its own rotated plane (children of a 3D-transformed parent can render flat).
 - A half-closed card seen from the open side reads as broken at thumbnail size — stop around half-closed, or design a cover.
 - `<img height>` beats CSS `aspect-ratio` unless you add `height: auto`.
+- A one-column grid with a flexible absolutely-positioned demo gets a zero-height row on phones — use `grid-template-rows: auto minmax(0, 1fr)`. Generic nav-link rules (`.nav a { background… }`) can wipe the header CTA's fill — scope them.
 
 ### Always-moving backgrounds, card stacks, big product windows (from the Stripe-style and portal tests)
 - A WebGL/rAF background that never stops makes every frame differ, so dead-scroll checks can't fail — give it a `#still` hook that freezes its time, and walk once with it (`--pause-animations` doesn't stop rAF/WebGL). A fixed full-screen canvas also reads 100% on largestVisual — judge from the sheets.
