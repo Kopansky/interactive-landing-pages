@@ -1,6 +1,6 @@
 ---
 name: interactive-landing-pages
-description: Use when designing or building a marketing/landing page, homepage or a full multi-page marketing website that should feel world-class — "like Notion/Stripe/Linear/Apple", "award-level", scroll-driven or interactive, illustrated/drawn, SaaS, photographic — or when asked for several design variations/directions of a site to compare, or to iterate on a client's reactions to such variations.
+description: Use for ANY request to design or build a website, web page, homepage, landing page, product page, app page or full marketing site for a business, product, app or service — in any language, including Hebrew ("תעשה לי אתר", "דף נחיתה", "אתר תלת מימד", "דף בית") — even when the request is one short line with no style named. Also use when asked for design variations or directions of a site, for a 3D, isometric, drawn, photographic, SaaS or scroll-driven site, or to iterate on a client's reactions to such pages.
 ---
 
 # Interactive landing pages
