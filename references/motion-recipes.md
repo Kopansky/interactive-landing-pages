@@ -275,6 +275,12 @@ Measure each object's start rect and target rect with transforms off (on load an
 - Fit-to-width words without JS: measure each word's em-width once, bake it as a CSS variable (`font-size: calc(100vw / var(--em))`), and let JS only refine it.
 - Visually-hidden screen-reader text inside a split-letter heading must reset its font size, or it inflates measurements.
 
+### Horizontal tracks, stacked cards and product windows (from the agency tests)
+- A pinned horizontal track or a stack of cards needs a hold on each panel (~30% of its scroll) with something moving (a loading bar, a slow push-in), or the sheets show half-panels and the walk reports dead scroll.
+- Swapping dissimilar UI screens (dark code editor → light design canvas): use a wipe (a scan line), never a crossfade — mixed UIs look broken mid-fade.
+- UI inside a scaled product window must stay readable: size its text in container-query units with a floor (≥ 12px on screen); side-by-side caption layouts shrink the window too far — put captions above or below it.
+- A fit-to-width wordmark measured with `scrollWidth` must be `width: max-content` (a block element narrower than its container measures wrong).
+
 ## Dates, countdowns and deadlines
 - Required facts: the year and the time zone (default: the business's). No year → no countdown; say so in the report.
 - Decide and document whether a deadline day counts ("until 1 Feb" = last valid day), singular/plural wording, and what each element shows after its date passes (tier greyed and struck, "has closed", event-day state).
