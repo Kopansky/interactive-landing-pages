@@ -100,3 +100,10 @@ Products cross text on narrow screens: give text a solid/gradient band, lay long
 - Report fidelity: what matches the photos, what was traced by eye, and what couldn't be confirmed (far side, materials, how it separates).
 - **Footer closing moment when the fixed canvas has already ended:** move the canvas into the footer section, or bake a short flipbook (8–12 frames) from the same scene and scrub it with scroll.
 
+## Liquids, printed wordmarks, one stage across the footer (from the bottle test)
+- **Liquid in a clear container:** an opaque mesh clipped by a horizontal plane (`material.clippingPlanes`); compute the level from sampled cross-section volumes so the surface stays level and the volume stays constant when the container tilts. Keep the container glass low-opacity (not transmission) so the liquid and inner parts stay visible.
+- **A wordmark printed on the product** is part of the product, not a logo: render it as a canvas decal at the photo's position; redraw it in your own typography if you don't have the artwork, and note that it differs.
+- **Compare the render with the photo** side by side (same view, same framing) in `work/` and list what matches and what differs.
+- **Closing moment in the footer with one sticky stage:** make the sticky wrapper span main and footer, so the same canvas carries the object into the footer.
+- **Phone caption fades:** fade a caption only after its whole block has been on screen; a fixed fade line (e.g. 45% of the screen) cuts the bottom of tall captions.
+

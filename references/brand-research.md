@@ -36,3 +36,6 @@ If the site is dead or blocked, read a Wayback Machine snapshot's HTML/CSS/JS di
 
 ## When the reference brand has changed
 If the live site doesn't match what the client remembers (io.net is light SaaS today; its dark crypto look is from 2024), check older snapshots (web.archive.org) and say which version you matched. Also list the reference's **forbidden patterns** — tone and claims you must not copy (investment-flavoured copy, taglines, "the world's …" lines that belong to other companies) — not only the visual patterns to take.
+
+## Product manuals and data sheets
+Makers' PDFs (manuals, technical data sheets) are the best source for part names and what a part does — often more precise than the marketing page (the Bfree "valve" was a heat sensor in the manual). If there's no PDF tool, extract the text streams with a short Node script, and cite the PDF URL. Respect "no reproduction" notices: restate facts in your own layout, don't copy the sheet.
