@@ -282,6 +282,12 @@ Measure each object's start rect and target rect with transforms off (on load an
 - Cap a fitted footer wordmark's height (e.g. `max-height` ≈ 42vh via font-size clamp): condensed or serif faces fitted to the width can make the footer taller than the screen.
 - A fit-to-width wordmark measured with `scrollWidth` must be `width: max-content` (a block element narrower than its container measures wrong).
 
+### Bento boards (from the agency bento test)
+- **What makes a bento not a template:** unequal spans, mixed fills (one dark, one accent, pastels), live UI inside tiles, and tiles that change state as the story advances ("done" after their chapter).
+- **Tile grows into a chapter:** animate a `clip-path: inset()` from the cell to the full screen and scale the chapter content to fit the current clip — without the scaling every transition frame is a bare coloured field. Box-shadows don't survive a clip-path; put the shadow on a wrapper that fades.
+- **Pinned boards need movement at their lead and tail** (the first/last ~0.3 viewport): a staggered settle or drift, or they read as dead scroll. Between two pinned boards in a row, keep the header fixed and overlap the seam.
+- **Custom-property defaults are the no-JS state:** write `--k` defaults as the finished state so skeleton layers never show without JS.
+
 ## Dates, countdowns and deadlines
 - Required facts: the year and the time zone (default: the business's). No year → no countdown; say so in the report.
 - Decide and document whether a deadline day counts ("until 1 Feb" = last valid day), singular/plural wording, and what each element shows after its date passes (tier greyed and struck, "has closed", event-day state).
