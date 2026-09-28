@@ -261,6 +261,14 @@ Measure each object's start rect and target rect with transforms off (on load an
 - **Crossfading plates look faint in screenshots:** judge text from the held frames, and make sure the hold covers at least 30% of the beat.
 - **More stages than services:** map the spare stage to a stated fact, or give it a statement beat. Never invent a service for it.
 
+### Colour poster / kinetic type (from the hiring poster test)
+- Hebrew variable fonts with a width axis (e.g. Noto Sans Hebrew) make `font-stretch` a kinetic lever: a word stretches across the page with scroll. Cap the stretch at what fits 375 minus the gutters and check on the phone sheet — it clips first there.
+- Split-flap in RTL: pad words of different lengths to a fixed cell count on the left (the line end in RTL), and flip cells right to left.
+- RTL marquees: the track starts on the right; offset it so no empty strip shows at the start.
+- The frameless header takes each chapter's colour (ink on light floods, paper on dark).
+- A flex `<summary>` or flex row with text + `<bdi>` turns them into separate unwrappable flex items that overflow on phones — wrap the text in one span.
+- Replace arrow/symbol characters with drawn SVG: a glyph missing from the font falls back silently, and `--font` doesn't catch it.
+
 ## Dates, countdowns and deadlines
 - Required facts: the year and the time zone (default: the business's). No year → no countdown; say so in the report.
 - Decide and document whether a deadline day counts ("until 1 Feb" = last valid day), singular/plural wording, and what each element shows after its date passes (tier greyed and struck, "has closed", event-day state).

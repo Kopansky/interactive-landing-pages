@@ -81,3 +81,11 @@ Products cross text on narrow screens: give text a solid/gradient band, lay long
 - **Header parity:** a negative header margin that applies only in live (`.gl`) mode breaks heightStable by exactly the header height; apply it in every mode.
 - **Captions on colour floods:** switch caption colour from the flood's brightness in JS.
 - **Absences are claims too:** no keyhole implies no mechanical backup; no keypad implies none; a success LED colour is a feature. Security products: never "unbreakable", "only you", "100% secure".
+
+## Two-sided app stories, card round-trips, transitions (from the hiring-app test)
+- **Canvas RTL for mixed strings** ("יום ג׳ 10:00", "נ.ש"): draw the Hebrew part RTL and the number/time part LTR separately, placed by measured widths.
+- **Card round-trip:** when a card flies out of the screen and lands back on it, match the card's aspect to the screen element's rect and draw both with one shared function, so the landing is seamless.
+- **Transitions cross text too:** when the object changes sides while the next caption rises, it sweeps over the text. Arc the object up and over, or dip it below the fold and bring it back late; check the in-between frames on the contact sheet, not only the held ones.
+- **Honest labels:** a "sample screen" chip inside the texture is unreadable at thumbnail size; the disclosure that counts is the DOM caption. Keep both.
+- **Tall-screen static fallback:** on phones the caption band can cover most of a pinned still; there, stack the still above the caption instead.
+

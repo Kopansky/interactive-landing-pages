@@ -292,3 +292,10 @@ With JS off, the page shows the finished drawing, text included. It was checked 
 - **Wide ending shot:** frame the building, not the whole plinth; let the ground bleed off the edges.
 - **Two pinned drawn chapters on one page:** each gets its own smoothed progress and redraws only while on screen. In no-JS mode, put the caption before the still.
 - **Preview helper:** a small script that renders the scene at (state, camera) to PNG speeds up iteration. Build it early.
+
+## People, small UI and per-object light (from the hiring isometric test)
+- **People:** faceless, simple proportions (head ≈ 1/6 of height), varied skin tones and neutral clothing. Sort seated figures after the seat and before the chair back; two chairs at 90° can project onto the same screen line and stack the people, so offset them.
+- **App UI inside a world** (a phone on a porch): engine text on a phone face is unreadable at 2–3× zoom. Pin HTML notes to projected points instead.
+- **Per-object light:** "the street dims but one building stays bright" = tint everything except that group, and add a warm light pool under it; captions follow the scene's brightness.
+- **Phones:** the world fills only the lower half at 375, so caption windows must overlap more between stops, or the top half goes blank.
+
