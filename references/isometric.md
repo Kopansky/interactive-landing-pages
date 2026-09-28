@@ -332,3 +332,9 @@ With JS off, the page shows the finished drawing, text included. It was checked 
 - **Zoomed world under a frameless header:** add top and bottom scrims once the hero is past.
 - **Zoom cap** is relative to the hero's own scale — measure it against the hero framing, not the full screen.
 - **Metaphor props imply claims** (trophies = awards, dice = luck): draw the idea without the prop (a display shelf, not cups) and add a note ("not awards, results or luck").
+
+## Route worlds (from the agency metro test)
+- **Camera per shot = focus point + view width + screen anchor** (and a separate phone spec); fitting a 3D box of a long route gives wildly different zooms because its corners are mostly empty.
+- **Painter passes for a line world:** land → stations → viaduct → train → front parapets, with nearby objects kept on the back side of the line — a moving train then sorts correctly for free.
+- A 2×3 screen wall on an x/y face projects about as tall as wide — to make it big, rotate the world or put the caption at the side.
+- Large flat roofs: light tops with dark sides (dark tops read as heavy black slabs). A wide night scene cropped with `slice` loses its subject on phones — give it its own phone viewBox. Parallel preview helpers must write one file per output.
