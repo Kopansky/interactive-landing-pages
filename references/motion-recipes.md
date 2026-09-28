@@ -288,6 +288,12 @@ Measure each object's start rect and target rect with transforms off (on load an
 - **Pinned boards need movement at their lead and tail** (the first/last ~0.3 viewport): a staggered settle or drift, or they read as dead scroll. Between two pinned boards in a row, keep the header fixed and overlap the seam.
 - **Custom-property defaults are the no-JS state:** write `--k` defaults as the finished state so skeleton layers never show without JS.
 
+### Paper-cut pop-up cards (from the agency paper test)
+- **90° pop-up card:** the base rotates `rotateX(90deg)` from its top edge, the back page and each pop-up piece rotate from the bottom edge; cap every piece's angle at the card's current open amount so nothing pokes through a closing card.
+- Fake contact shadows as blurred bars on the base; accordion folds alternate ±2θ; an SVG drawn "on" a 3D plane needs its own rotated plane (children of a 3D-transformed parent can render flat).
+- A half-closed card seen from the open side reads as broken at thumbnail size — stop around half-closed, or design a cover.
+- `<img height>` beats CSS `aspect-ratio` unless you add `height: auto`.
+
 ## Dates, countdowns and deadlines
 - Required facts: the year and the time zone (default: the business's). No year → no countdown; say so in the report.
 - Decide and document whether a deadline day counts ("until 1 Feb" = last valid day), singular/plural wording, and what each element shows after its date passes (tier greyed and struck, "has closed", event-day state).
