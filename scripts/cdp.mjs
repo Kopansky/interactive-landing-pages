@@ -16,11 +16,10 @@ function findChrome() {
 }
 
 export async function open({ url, W = 1440, H = 900, nojs = false, reduce = false, workdir = os.tmpdir() }) {
-  // Chrome fails to start when its profile path is too long (Windows path limit) — fall back to the system temp folder
-  // Chrome fails on long profile paths; then fall back to %TEMP%, but tag the folder with the workdir's owner
-  // (e.g. the test id) so parallel agents can tell their leftovers apart
+  // Chrome fails to start when its profile path is too long (Windows path limit): fall back to %TEMP%, but tag the
+  // folder with the workdir's owner (e.g. the test id) so parallel agents can tell their leftovers apart
   let base = path.resolve(workdir), tag = '';
-  if (base.length > 110) { const n = path.basename(base); tag = ((n === 'work' ? path.basename(path.dirname(base)) : n).replace(/[^w-]/g, '').slice(0, 40)) + '-'; base = os.tmpdir(); }
+  if (base.length > 110) { const n = path.basename(base); tag = ((n === 'work' ? path.basename(path.dirname(base)) : n).replace(/[^\w-]/g, '').slice(0, 40)) + '-'; base = os.tmpdir(); }
   const udd = fs.mkdtempSync(path.join(base, 'ilp-prof-' + tag));
   const chrome = spawn(findChrome(), ['--headless=new', '--remote-debugging-port=0', '--user-data-dir=' + udd,
     '--hide-scrollbars', '--disable-smooth-scrolling', '--no-first-run', '--no-default-browser-check',
