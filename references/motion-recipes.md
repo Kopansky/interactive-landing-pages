@@ -294,6 +294,13 @@ Measure each object's start rect and target rect with transforms off (on load an
 - A half-closed card seen from the open side reads as broken at thumbnail size — stop around half-closed, or design a cover.
 - `<img height>` beats CSS `aspect-ratio` unless you add `height: auto`.
 
+### Always-moving backgrounds, card stacks, big product windows (from the Stripe-style and portal tests)
+- A WebGL/rAF background that never stops makes every frame differ, so dead-scroll checks can't fail — give it a `#still` hook that freezes its time, and walk once with it (`--pause-animations` doesn't stop rAF/WebGL). A fixed full-screen canvas also reads 100% on largestVisual — judge from the sheets.
+- CSS 3D card stacks: per-card `perspective()` plus explicit z-index (not preserve-3d sorting); build cards at their focused size and scale them down so text stays crisp; the focused card fills ≥ 60% of the width.
+- A gradient wordmark with transformed (rising) letters paints nothing if `background-clip: text` is on the parent — give each letter the gradient offset by its own position.
+- Big product window under changing chapter headlines: measure the tallest caption once and place the window below it; keep captions outside the window so no-JS shows them inline; the static fallback is one tall window with every view stacked. UI text inside the window lives in divs/spans (not `<p>`) so it doesn't drag the body-size median.
+- A final state that looks empty (a board with every card in Done) — keep one item in progress.
+
 ## Dates, countdowns and deadlines
 - Required facts: the year and the time zone (default: the business's). No year → no countdown; say so in the report.
 - Decide and document whether a deadline day counts ("until 1 Feb" = last valid day), singular/plural wording, and what each element shows after its date passes (tier greyed and struck, "has closed", event-day state).
