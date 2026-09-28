@@ -22,5 +22,6 @@ The taste of this skill's owner, distilled from ~100 pages reviewed one by one. 
 - Dashed placeholder boxes everywhere. Placeholders are small tags, at most one per section.
 - Looking like a design tool; framed or pill-shaped sticky headers.
 - Showing unfinished work: a page that looks half-done reads as bad even if the idea is good.
+- Baby, health and care products done soft, pastel and "friendly" (the first Bfree bottle page: "not professional at all"): they should look like a medical-device product — clinical white and cool greys, one restrained accent, technical drawings, cross-sections, part numbers, data-sheet specs, precise type — while still making no medical claims.
 - A thin footer (just a wordmark and a line of small links) under a stunning page: the footer is the last chapter and gets the same care.
 - Repeating what already exists: a second can page when there are already cans; pick a different product or world.
