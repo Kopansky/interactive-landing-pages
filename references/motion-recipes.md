@@ -279,6 +279,7 @@ Measure each object's start rect and target rect with transforms off (on load an
 - A pinned horizontal track or a stack of cards needs a hold on each panel (~30% of its scroll) with something moving (a loading bar, a slow push-in), or the sheets show half-panels and the walk reports dead scroll.
 - Swapping dissimilar UI screens (dark code editor → light design canvas): use a wipe (a scan line), never a crossfade — mixed UIs look broken mid-fade.
 - UI inside a scaled product window must stay readable: size its text in container-query units with a floor (≥ 12px on screen); side-by-side caption layouts shrink the window too far — put captions above or below it.
+- Cap a fitted footer wordmark's height (e.g. `max-height` ≈ 42vh via font-size clamp): condensed or serif faces fitted to the width can make the footer taller than the screen.
 - A fit-to-width wordmark measured with `scrollWidth` must be `width: max-content` (a block element narrower than its container measures wrong).
 
 ## Dates, countdowns and deadlines

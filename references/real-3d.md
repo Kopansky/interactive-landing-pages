@@ -112,3 +112,10 @@ Products cross text on narrow screens: give text a solid/gradient band, lay long
 - **Giant Hebrew wordmarks with final letters** (ך ם ן ף ץ) are clipped by a tight line-height ("סמוך" read "סמור"): give descenders room (line-height ≥ 1.1, or padding-bottom) and check the footer at 375.
 - **Tall screens need a different look-at target**, not only a pulled-back camera: horizontal spreads (explodes, object + phone) get cut at 375 unless the target and layout move to a vertical arrangement.
 
+## Frosted glass that actually blurs (from the privacy-coin test)
+- `transmission` + `roughness` blurs only **opaque** objects behind it: moving things behind frost must be opaque and saturated, or they vanish into a white glow; additive/transparent glows never show through.
+- The glass needs something to blur: put the backdrop inside the scene as an opaque full-screen quad (not DOM colour behind a transparent canvas) — which also rules out DOM colour floods on that stage; change the quad's colour per beat instead and switch caption/header contrast from its brightness.
+- A clear window in frosted glass = a roughness mask, plus a patched `transmission_fragment` in `onBeforeCompile` so the masked area samples sharp.
+- **Tall baked stills** must match the phone's aspect (e.g. 900×1950 for 375×812) or `object-fit: cover` crops the object.
+- A two-line stacked headline next to an object filling ~90% of the screen may sit under the 45% h1-width guide — that's a deliberate composition, not a timid one.
+
