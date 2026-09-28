@@ -11,6 +11,16 @@ git clone https://github.com/Kopansky/interactive-landing-pages.git ~/.claude/sk
 ```
 (Windows: `C:\Users\<you>\.claude\skills\interactive-landing-pages`.) Restart Claude Code; the skill triggers on requests like "build a landing page like Stripe", "give me 6 design variations", "make it interactive with scroll".
 
+## Getting the same results
+
+1. **Check the machine once:** `node ~/.claude/skills/interactive-landing-pages/scripts/doctor.mjs`. It needs Node 22+, Google Chrome, WebGL and access to Google Fonts. If a check fails, the agent can't verify its pages and quality drops silently.
+2. **Strongest model, high effort.** A good page takes an agent 25–60 minutes and 250–600k tokens. Quick, cheap runs produce the timid pages this skill exists to prevent.
+3. **Invoke it explicitly:** start with `/interactive-landing-pages` (or say "use the interactive-landing-pages skill"), then describe the business. It asks one question, which direction, and builds.
+4. **Give it the facts you have** (name, services, hours, prices). Everything else becomes a placeholder tag, never an invented fact.
+5. **Be the client.** React to each page ("too small", "looks like a template", "bad", "love the knife page"). Each reaction becomes a rule in the brief's taste list. `templates/taste.md` is the starting taste, distilled from ~100 reviewed pages.
+6. **Several directions at once:** ask for 3–4 far-apart directions. The session then runs one background agent per page with `templates/variant-dispatch.md`, and reviews each page's contact sheet before showing it.
+7. **Optional tools:** an image-generation MCP for photographic directions (without one, choose drawn, isometric, 3D or type-led directions), and the Mobbin MCP for brand research.
+
 ## What's inside
 
 | Path | What |
@@ -28,9 +38,10 @@ git clone https://github.com/Kopansky/interactive-landing-pages.git ~/.claude/sk
 | `scripts/compress.mjs` | Resize/re-encode images to JPEG, WebP or PNG with headless Chrome (no ImageMagick needed) |
 | `scripts/canvas-job.mjs` | Build-time pixel jobs in Chrome: flatten studio backgrounds, masks, recolouring, cutting a part out of a photo |
 | `scripts/serve.mjs` | Tiny static server for previewing a site folder |
+| `scripts/doctor.mjs` | One-time check: Node, Chrome, WebGL, Google Fonts |
 | `scripts/cdp.mjs` | Dependency-free headless Chrome driver (Node 22+) that always deletes its profile |
 | `assets/isometric-engine.js` | Flat 3-tone isometric SVG engine (prisms, domes, balls, rotation between iso angles) |
-| `templates/` | Shared brief and parallel-variant dispatch prompt |
+| `templates/` | Shared brief, default client taste (`taste.md`) and the per-page agent prompt (`variant-dispatch.md`) |
 
 ## Requirements
 Node 22+ and Google Chrome for the verification scripts (`CHROME_PATH` to override). Optional: the Mobbin MCP for reference research; an image-generation MCP for photographic styles.
