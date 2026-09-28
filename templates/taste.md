@@ -2,6 +2,8 @@
 
 The taste of this skill's owner, distilled from ~100 pages reviewed one by one. It applies to every project; the client's own reactions are added on top in the brief's **Client taste** list and win where they conflict. The art director checks every page against it before showing it (`references/art-director.md`).
 
+**Reading the feedback:** the owner names only what he dislikes. A page he doesn't comment on is approved; a comment is a rejection or a fix to make.
+
 ## Loves
 - **Everything big.** Huge headlines (hero ≥ 88px at 1440, usually 120–150px), one idea per screen, big centred or edge-to-edge compositions. Small is the most common reason for rejection.
 - **A real concept.** The whole page follows one spine (a case file opening, a tree growing through a life, a headset lit by its own light), and scroll drives it: pinned stages, things assembling, exploding, transforming, the camera travelling through a world.
