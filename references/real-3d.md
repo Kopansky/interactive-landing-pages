@@ -107,3 +107,8 @@ Products cross text on narrow screens: give text a solid/gradient band, lay long
 - **Closing moment in the footer with one sticky stage:** make the sticky wrapper span main and footer, so the same canvas carries the object into the footer.
 - **Phone caption fades:** fade a caption only after its whole block has been on screen; a fixed fade line (e.g. 45% of the screen) cuts the bottom of tall captions.
 
+## Lit scenes, Hebrew wordmarks, tall screens (from the SOS test)
+- **Caption colour follows the scene's light**, not the background colour: in a lit 3D scene the table or wall fills the frame, so switch light/dark captions from the light level of the beat (morning/afternoon/evening), not from a CSS background.
+- **Giant Hebrew wordmarks with final letters** (ך ם ן ף ץ) are clipped by a tight line-height ("סמוך" read "סמור"): give descenders room (line-height ≥ 1.1, or padding-bottom) and check the footer at 375.
+- **Tall screens need a different look-at target**, not only a pulled-back camera: horizontal spreads (explodes, object + phone) get cut at 375 unless the target and layout move to a vertical arrangement.
+
