@@ -89,3 +89,9 @@ Products cross text on narrow screens: give text a solid/gradient band, lay long
 - **Honest labels:** a "sample screen" chip inside the texture is unreadable at thumbnail size; the disclosure that counts is the DOM caption. Keep both.
 - **Tall-screen static fallback:** on phones the caption band can cover most of a pinned still; there, stack the still above the caption instead.
 
+## Networks, globes and shape-shifting objects (from the crypto test)
+- **Data-viz 3D** (node meshes, globes, particles, routing arcs): ~40% of the nodes on phones; additive glow on an opaque canvas; an occluder sphere to hide the back of a globe; draw arcs on with `geometry.setDrawRange`. A globe implies geography and coverage — label it "not a map, not live" unless confirmed.
+- **An object that changes form** (card → point → mesh → cluster): the transformations are the beats; keep one timeline and let the camera hold on each form. Check the in-between frames — they tend to go empty.
+- **One WebGL context across two sections** (stage and footer): move the same canvas into the footer's closing section instead of creating a second renderer.
+- **Giant wordmark fitted with JS:** size it in CSS as close as possible first (`vw`), so the JS fit changes the height by only a pixel or two versus no-JS.
+

@@ -33,3 +33,6 @@ If the site is dead or blocked, read a Wayback Machine snapshot's HTML/CSS/JS di
 - Inspired by, never a copy: no brand logos, names, copy, or product UI of the reference brand.
 - The client's real product UI stays recognisable; restyle only its frame.
 - No invented logos, testimonials, ratings, customer counts or statistics — where the brand shows a logo wall, show the client's channels/integrations/customer types instead.
+
+## When the reference brand has changed
+If the live site doesn't match what the client remembers (io.net is light SaaS today; its dark crypto look is from 2024), check older snapshots (web.archive.org) and say which version you matched. Also list the reference's **forbidden patterns** — tone and claims you must not copy (investment-flavoured copy, taglines, "the world's …" lines that belong to other companies) — not only the visual patterns to take.
