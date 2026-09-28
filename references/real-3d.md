@@ -166,3 +166,10 @@ Products cross text on narrow screens: give text a solid/gradient band, lay long
 - **How literal each form must be:** check every service shape at thumbnail size on the sheet; a screen stack, a route and a search bar each needed several redesigns before they read.
 - **Sample chips projected onto moving objects** need their own fade curve and phone size.
 - A sticky still inside a block shorter than 100vh with `margin-bottom: -100vh` pins for the whole block — unpin short project stills.
+
+## Particle forms (from the agency particles test)
+- **Forms that read:** draw each form procedurally on a full-viewport 2D canvas, sample it weighted by alpha in pixel order (so forms flow coherently), store the targets in data textures and morph in the vertex shader. ~260k points on desktop, ~100k on phones. Fills must be a darker tint of the chapter colour, not low-alpha white — with 100k+ points a faint white fill turns solid and swallows white glyphs.
+- **Between forms, a swarm, not noise:** each particle leaves on its own delay and is pulled to a lead point travelling on an arc, weighted by sin(πt); shrink the flock radius and x-stretch on phones or it reads as a flat band.
+- **Resolving to a crisp image:** the crisp plane must include the frame chrome (browser bar), or the bar stays noisy next to a sharp screenshot.
+- **Final hold:** end the last hold at the page's scroll end so the drift keeps changing, and include scroll position in the render-on-demand key, or caption fades stall.
+- Rich chapter colours (never a black void) make particle pages read premium.
