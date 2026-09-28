@@ -316,3 +316,10 @@ With JS off, the page shows the finished drawing, text included. It was checked 
 - **Night palettes:** mix saturated station hues less toward navy than neutrals (yellow and red turn brown).
 - Duplicate captions for the no-JS stills are fine if the duplicates are `aria-hidden` and the second h1 becomes a `<p>`. Parallel walk runs are safe (each has its own profile).
 
+## Cutaway buildings (from the agency tower test)
+- Render each floor as its own `<g>`, bottom to top, with the facade as the floor's last layer (a shared painter sort fails). Lifting the storeys above must exceed about (W+D)/2 − storey height, or the slab still covers the back-wall boards.
+- Glass facades at about 0.5 alpha drawn after the room read as a closed tower; rolling the glass up into the ceiling reads better than fading it.
+- A night footer from the same symbols: feColorMatrix on `<use>` plus an unfiltered lit facade — keep the matrix dark.
+- Phone hero with a tall subject under a 4-line h1: let its region bleed past the bottom (up to ~1.3), don't fit it.
+- Captions: start the next about 0.4 of a beat before arrival and end the current around 0.58, or the fades land in the slow part of the ease.
+- Screenshots sheared onto iso faces are too small to be the proof — follow the world with a flat "up close" section of big frames.
