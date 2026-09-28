@@ -48,3 +48,15 @@ Products cross text on narrow screens: give text a solid/gradient band, lay long
 - **Captions near a transparent header over a canvas:** fade them out as they approach the header. Keep captions in the half of the screen the object isn't in; check the frames between beats, where the object moves across.
 - **three.js pitfalls:** `#include` lines in `onBeforeCompile` shaders must sit on their own line; set `customProgramCacheKey` per custom material; glass can't see other glass, so liquids and contents inside glass must be opaque meshes; post-processing depth of field treats a screen-space background mesh as a real plane (render the background as `scene.background` instead).
 - **Weight:** list GPU cost and file size in the report; self-host three.js at launch if the privacy policy requires it.
+
+## Phones with live app screens (from the fitness-app test)
+- **Screens are canvas textures you draw** (≈1080×2424): an unlit material, tone mapping off, maximum anisotropy, redrawn only when scroll progress changes. Legibility at 375: the phone ≥ ~54% of the viewport height and texture text ≥ ~70px.
+- **RTL on canvas:** `ctx.direction = 'rtl'` reverses number-only strings ("4 × 12" → "12 × 4"). Set the direction per string (canvas has no `<bdi>`): RTL for Hebrew, LTR for numbers and Latin.
+- **Fonts on canvas:** `await document.fonts.load('700 70px Font', 'אבג 0123')` with Hebrew AND digits before drawing. Unicode-range subsets otherwise leave the texture in a fallback font, and walk.mjs only checks DOM fonts.
+- **Screen changes:** crossfade two offscreen buffers into the texture (`globalAlpha` over the old frame looks muddy), or hard-swap while the phone faces away.
+- **UI to 3D:** to make a card fly out of a screen tile, map the tile's pixel rect to phone-local coordinates, `localToWorld`, then slerp/lerp to its free pose. Cards must never be the accent colour on an accent-coloured section.
+- **Sample data across screens** (exercise count, sets, totals) must agree everywhere. Keep one data object that every screen is drawn from.
+- **Progress screens in wellness apps:** vary values rather than drawing a steady rise, and label "sample screen, not an outcome". Streaks and counters are feature claims; put them on the implied list.
+- **Static fallback without dead scroll:** a sticky still with the caption entering as the still pins and leaving as it unpins (caption offset ≈ min(100vh, (runway − 100vh) × 0.75)).
+- **Pinned-caption exit:** fade captions over the first ~20% of the sticky wrapper's exit progress, not only near the header; on tall screens they cross the object earlier.
+- **No idle animation:** render only when the timeline changes; then `?still` isn't needed.
