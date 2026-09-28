@@ -60,3 +60,13 @@ Products cross text on narrow screens: give text a solid/gradient band, lay long
 - **Static fallback without dead scroll:** a sticky still with the caption entering as the still pins and leaving as it unpins (caption offset ≈ min(100vh, (runway − 100vh) × 0.75)).
 - **Pinned-caption exit:** fade captions over the first ~20% of the sticky wrapper's exit progress, not only near the header; on tall screens they cross the object earlier.
 - **No idle animation:** render only when the timeline changes; then `?still` isn't needed.
+
+## Self-lit products, oval parts, hollow objects (from the gaming-headset test)
+- **Emissive parts** (light rings, RGB zones): `toneMapped: false`; fake the halo with additive sprites/rings instead of a bloom pass (bloom kills the transparent canvas, and with it the DOM colour floods behind the object). Put point lights behind the emitting face, or they show as specular dots.
+- **Additive glow in baked stills:** `AdditiveBlending` writes alpha², so `toDataURL` un-premultiplies and clamps the glow to yellow. Use `CustomBlending` with `blendSrcAlpha = OneFactor` (and `blendDstAlpha = OneFactor`) for glow materials that get baked.
+- **Oval or mirrored parts:** nest groups (axis frame → scaled oval group → parts). Decals on the mirrored side need counter-rotation and pre-squashing, and explode vectors live in each part's local frame.
+- **Hollow objects** (headphones, rings, frames) have nothing to macro into: pull the inner part out, turn it to face the camera and scale it up.
+- **Bands, arms, cables:** sweep a profile along a curve (`TubeGeometry` or `ExtrudeGeometry` with `extrudePath`). Swinging parts (a boom mic) need a clearance check through the whole arc.
+- **Labels on a straight-line explode** stack up: alternate the anchors above and below per part, and re-check on phones.
+- **Unknown price:** the buy block shows a price placeholder and "Colourway (illustrative)"; the picker recolours the live model.
+- **No cable shown** can read as "wireless": list it as an implied fact, and leave battery and latency out unless confirmed.
