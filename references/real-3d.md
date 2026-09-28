@@ -148,3 +148,12 @@ Products cross text on narrow screens: give text a solid/gradient band, lay long
 - **The fallback hides errors:** a JS error sends the page to stills and the sheet can look like a pass — check the GL class (e.g. `has-gl`) before trusting a GL sheet. Parallel GL verification can trip the 9 s load timeout (cdp.mjs runs without cache) — run GL walks one or two at a time.
 - **Caption fades on a fixed canvas:** drive them from the camera's arrive/leave window (CSS sticky timing drifts); fade near the header only when leaving; a `::before` backdrop covers padding too, so offset captions with margin; sticky captions pin only for (runway − 100vh), so align camera beats with that stretch; clamp projected label chips to the viewport.
 - **Margins collapsing out of sections** can make the live page thousands of px taller than no-JS while each mode alone is "height stable" — use `display: flow-root` on sections and compare the JS and no-JS heights.
+
+## A room of several objects, time-of-day light (from the agency desk test)
+- **Several objects in one room** (a desk with four devices): place captions per beat — a top band for wide shots, a side column for push-ins — and solve each camera pose from the device's screen normal, size and the FOV so its screen fills the frame; add a camera stop between devices so moves don't skim other objects.
+- **Time-of-day as the spine:** key the sun direction, sky/wall colours and a shadow-only window shape (mullions as holes) through states (morning → noon → golden hour → dusk → night); it changes every frame and is a cheap, strong product-film light.
+- **Screens on phones:** turn a landscape tablet to portrait; a monitor's texture text needs ~150px+ to read at 375 (the ~70px rule is for phones filling the frame).
+- **Static fallback captions** travelling over busy renders need a solid panel, not a scrim.
+- **A portfolio of six inside a pinned film:** pinned rows (~170vh each) with fades; unpinned 100vh rows let captions scroll across the objects. Expect a long page — keep each row moving.
+- **The last chapter** needs a final drift stop, or frames freeze before the footer.
+- Skipping 3D in reduced motion: return from a function; a top-level `throw` in a module counts as a console error.
