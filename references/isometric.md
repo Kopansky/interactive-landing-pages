@@ -323,3 +323,12 @@ With JS off, the page shows the finished drawing, text included. It was checked 
 - Phone hero with a tall subject under a 4-line h1: let its region bleed past the bottom (up to ~1.3), don't fit it.
 - Captions: start the next about 0.4 of a beat before arrival and end the current around 0.58, or the fades land in the slow part of the ease.
 - Screenshots sheared onto iso faces are too small to be the proof — follow the world with a flat "up close" section of big frames.
+
+## Boards, tracks and card captions (from the agency board-game test)
+- **The occlusion rule for boards and tracks:** a tall object hides the ground behind it diagonally (along −x/−y) up to its height — put tall props only on the two back edges (x≈0, y≈0) or in front of empty ground.
+- **Deco on centred groups:** deco `pts` are offsets from the solid's `o` even when parts are built around a centred pivot for `group()` — compute them from `o`, or doors and windows land outside the body.
+- **Text on the 'x' face** reads along −y: `anchor: 'end'` pushes it off the face; use start/middle.
+- **Card-flip captions:** a card drawn from a deck can be the caption panel (no text on the drawing). Draw it before the move; the outgoing card leaves away from the drawing, never fades across it; on phones drop cards down instead.
+- **Zoomed world under a frameless header:** add top and bottom scrims once the hero is past.
+- **Zoom cap** is relative to the hero's own scale — measure it against the hero framing, not the full screen.
+- **Metaphor props imply claims** (trophies = awards, dice = luck): draw the idea without the prop (a display shelf, not cups) and add a note ("not awards, results or luck").
