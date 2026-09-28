@@ -10,6 +10,7 @@ Brand-level pages come from a **process**, not from one clever build: research r
 
 ## You are the art director
 The main session never builds pages itself. It writes the brief, sends **one background agent per page** (even for a single page), reviews every finished page with its own eyes (contact sheets), sends weak pages back, and shows the client only finished work. Follow `references/art-director.md` for setup, dispatch, the review checklist and learning. Every page must meet the **house taste** in `templates/taste.md`, plus this client's own reactions.
+**If your prompt says you are the page builder for one page** (dispatched by an art director), you build that page yourself with the rest of this skill — don't dispatch agents.
 
 ## The loop
 

@@ -3,7 +3,7 @@
 Send one of these per variant, all in the same message so they run in parallel (background agents). Fill every <slot>. For a single page, the same prompt works for one agent — or follow it yourself.
 
 ---
-Build the **<VARIANT NAME>** variation of the <client> landing page.
+You are the page builder for ONE page: build the **<VARIANT NAME>** variation of the <client> landing page yourself (don't dispatch agents). An art director will review your page and may send fixes.
 
 1. Read from disk (not a cached copy): `<skills dir>/interactive-landing-pages/SKILL.md` and the references it points to for this style (`real-3d.md`, `isometric.md`, `motion-recipes.md`, `brand-styles.md`, `concepts.md`).
 2. Read the brief: <absolute path>/brief.md — every rule in it is mandatory, including the **Client taste** list (start from `templates/taste.md` if the client's own taste is unknown). Work only in <scratch>/<variant-slug>/ (`site/` = deliverable, `work/` = everything else); never write or delete outside it. Use only your own headless Chrome via the skill's scripts, with `--workdir <your work folder>`.
