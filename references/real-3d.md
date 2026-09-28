@@ -95,3 +95,8 @@ Products cross text on narrow screens: give text a solid/gradient band, lay long
 - **One WebGL context across two sections** (stage and footer): move the same canvas into the footer's closing section instead of creating a second renderer.
 - **Giant wordmark fitted with JS:** size it in CSS as close as possible first (`vw`), so the JS fit changes the height by only a pixel or two versus no-JS.
 
+## Modelling a real product from photos (from the P90, bottle and SOS tests)
+- Copy the reference photos into `work/`, trace a clean side view to pixel coordinates, scale it by one known published dimension (e.g. 505 mm = 1270 px) and build the profile from that; lathe/extrude from the traced curve.
+- Report fidelity: what matches the photos, what was traced by eye, and what couldn't be confirmed (far side, materials, how it separates).
+- **Footer closing moment when the fixed canvas has already ended:** move the canvas into the footer section, or bake a short flipbook (8–12 frames) from the same scene and scrub it with scroll.
+

@@ -11,7 +11,7 @@ The taste of this skill's owner, distilled from ~100 pages reviewed one by one. 
 - **Single products told like a product film:** turn, take it apart, macro into a detail, colourways flooding the whole page, a buy block with the same object. Reference level: the chef-knife and brewery-cans pages, the X-ray garage, the 3D keyboard and headset.
 - **Clean and finished.** Few elements per screen, a frameless sticky header, generous space that still feels full, nothing half-done.
 - **Guessing well.** Make smart assumptions, build, list them. Ask only which direction.
-- **Fictional brands** for products, never a real brand or anything that impersonates one.
+- **Fictional brands** for products by default. When the client explicitly asks for the real product and names, do it — name as text, specs from the maker with sources, no logo, and an "unofficial design concept, not affiliated" line.
 
 ## Rejected (each one happened)
 - Narrow text column with small type; timid "calm editorial" with no concept (the first law-firm page, ranked worst).
