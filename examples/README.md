@@ -1,6 +1,6 @@
 # House styles — the quality bar
 
-Contact sheets (12 frames, top to bottom of the page at 1440×900) of approved pages, and two rejected ones. The owner reviews everything shown to him and names only what he dislikes, so every page he didn't reject counts as approved. They are the visual bar for the art director's review (`references/art-director.md` §3): "is this page at the level of these?" Study how big, how full and how concept-led they are. **Never copy a concept or layout from them**; every client gets their own spine.
+Contact sheets (12 frames, top to bottom of the page at 1440×900) of approved pages, and two rejected ones. The owner reviews every page and names only what they dislike, so every page not rejected counts as approved. They are the visual bar for the art director's review (`references/art-director.md` §3): "is this page at the level of these?" Study how big, how full and how concept-led they are. **Never copy a concept or layout from them**; every client gets their own spine.
 
 These are also the directions offered in the intake question (SKILL.md step 0).
 
