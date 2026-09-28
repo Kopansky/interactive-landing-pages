@@ -16,7 +16,7 @@ The main session never builds pages itself. It is the art director: it writes th
 ## 3. Review every page when its agent reports
 Don't forward the agent's report as proof. For each page:
 1. `node <skill>/scripts/shots.mjs <url> <review-dir> --n 12` (add `#qa-skip-gate` or similar if the page has a gate), then open the contact sheet image and look at all 12 frames. For pinned 3D or phone stories also look at 375: `shots.mjs <url> <dir> 375 812 --n 12`.
-2. Check against this list; any failure goes back to the agent:
+2. Put it next to the matching sheet in `examples/good/` (same style) — it should be at that level of size, fullness and concept — and check against this list; any failure goes back to the agent:
    - **Big:** does the hero fill the screen with a huge headline? Is any frame mostly empty, or text small?
    - **Concept:** can you tell the idea from the contact sheet alone? Does scroll visibly change something in most frames?
    - **Visual:** is the drawing/photo/model large, rendered, and reading as the right object? Nothing blank, clipped, black or broken.

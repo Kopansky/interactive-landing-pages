@@ -43,6 +43,7 @@ git clone https://github.com/Kopansky/interactive-landing-pages.git ~/.claude/sk
 | `scripts/doctor.mjs` | One-time check: Node, Chrome, WebGL, Google Fonts |
 | `scripts/cdp.mjs` | Dependency-free headless Chrome driver (Node 22+) that always deletes its profile |
 | `assets/isometric-engine.js` | Flat 3-tone isometric SVG engine (prisms, domes, balls, rotation between iso angles) |
+| `examples/` | House styles: contact sheets of approved pages per style (the quality bar and the intake options) and two rejected ones |
 | `templates/` | Shared brief, default client taste (`taste.md`) and the per-page agent prompt (`variant-dispatch.md`) |
 
 ## Requirements

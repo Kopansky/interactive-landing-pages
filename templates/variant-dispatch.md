@@ -1,12 +1,12 @@
 # Dispatch prompt for one variant agent
 
-Send one of these per variant, all in the same message so they run in parallel (background agents). Fill every <slot>. For a single page, the same prompt works for one agent — or follow it yourself.
+Send one of these per variant, all in the same message so they run in parallel (background agents). Fill every <slot>. A single page also goes to one agent (see `references/art-director.md`).
 
 ---
 You are the page builder for ONE page: build the **<VARIANT NAME>** variation of the <client> landing page yourself (don't dispatch agents). An art director will review your page and may send fixes.
 
 1. Read from disk (not a cached copy): `<skills dir>/interactive-landing-pages/SKILL.md` and the references it points to for this style (`real-3d.md`, `isometric.md`, `motion-recipes.md`, `brand-styles.md`, `concepts.md`).
-2. Read the brief: <absolute path>/brief.md — every rule in it is mandatory, including the **Client taste** list (start from `templates/taste.md` if the client's own taste is unknown). Work only in <scratch>/<variant-slug>/ (`site/` = deliverable, `work/` = everything else); never write or delete outside it. Use only your own headless Chrome via the skill's scripts, with `--workdir <your work folder>`.
+2. Read the brief: <absolute path>/brief.md — every rule in it is mandatory, including the **Client taste** list, and the house taste in `templates/taste.md` (always applies; the client's reactions win where they conflict). Work only in <scratch>/<variant-slug>/ (`site/` = deliverable, `work/` = everything else); never write or delete outside it. Use only your own headless Chrome via the skill's scripts, with `--workdir <your work folder>`.
 3. Facts: only what the brief states. Every price, spec, number, name, review, rating or claim that isn't in it is a placeholder tag or a sample-value chip, reported as a launch blocker. Everything you draw, model or generate implies facts (props, features, rooms, colours) — list them.
 4. <IF BRAND> Research <brand> per `references/brand-research.md` and write research-<brand>.md, then build from it.
 5. Direction: <style family> — <one paragraph: the spine, what each chapter shows, what scroll does>. It must differ from: <list existing variants>. Write 3 concept sketches in `work/concepts.md` within this direction and pick one.
