@@ -119,3 +119,10 @@ Products cross text on narrow screens: give text a solid/gradient band, lay long
 - **Tall baked stills** must match the phone's aspect (e.g. 900×1950 for 375×812) or `object-fit: cover` crops the object.
 - A two-line stacked headline next to an object filling ~90% of the screen may sit under the 45% h1-width guide — that's a deliberate composition, not a timid one.
 
+## Services without a product (from the agency 3D test)
+- A service business has no product to turn and explode: pick one symbolic actor (a cursor, a key, a seal) and make every chapter's object **born from it and return into it** — that's what makes it read as one film.
+- **file:// images taint WebGL:** embed texture images (portfolio screens) as data URIs at build time, or serve over http.
+- **Chapter colour changes:** RGB lerps go muddy (amber → mint = olive), HSL lerps pass through the wrong hue; flood the new colour as a circle from the click/object point instead.
+- **Mode classes vs component classes:** a component class that equals a mode class on `<html>` (`.cd-gl`) can hide the whole page — prefix mode classes differently (`is-gl`, `has-stage`).
+- **Phones:** a flex input's min-content can push a sticky caption wider than the screen — use `minmax(0, 1fr)` columns in caption grids. White caption text over a white object is invisible even with correct z-order — give captions a scrim when they can cross the object.
+
