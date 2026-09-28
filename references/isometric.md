@@ -299,3 +299,10 @@ With JS off, the page shows the finished drawing, text included. It was checked 
 - **Per-object light:** "the street dims but one building stays bright" = tint everything except that group, and add a warm light pool under it; captions follow the scene's brightness.
 - **Phones:** the world fills only the lower half at 375, so caption windows must overlap more between stops, or the top half goes blank.
 
+## Long worlds, images on faces, many labels (from the agency isometric test)
+- **Camera: fit to a screen region with 3D subject boxes.** `ISO.camera` with a fixed fraction (fx ≈ .62) pushes big subjects off-frame and only frames the points you pass (floor corners miss roof corners). Prefer a fit that takes the subject's full 3D bounding box and a target screen rectangle (the half not covered by text).
+- **Hero of a long street world:** the free "sky triangle" of an iso diamond is too small for a two-line h1 — anchor the hero camera on one building and let the rest bleed off-screen.
+- **Images on iso faces** (screens, billboards): an SVG `<image>` with an affine `transform="matrix(...)"` mapping the image rect onto the face's two edge vectors, in a front layer so painter's order doesn't hide it.
+- **Many small labelled things in one beat:** numbered chips on the objects plus a list in the caption; name chips collide.
+- **Static fallbacks lose the stage's background:** captions written light-on-dark for a night beat turn white-on-paper without JS — give the fallback caption its own dark panel.
+
