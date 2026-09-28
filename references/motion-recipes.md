@@ -269,6 +269,12 @@ Measure each object's start rect and target rect with transforms off (on load an
 - A flex `<summary>` or flex row with text + `<bdi>` turns them into separate unwrappable flex items that overflow on phones — wrap the text in one span.
 - Replace arrow/symbol characters with drawn SVG: a glyph missing from the font falls back silently, and `--font` doesn't catch it.
 
+### Colour floods between chapters (from the agency poster test)
+- A flood that completes before the next pinned chapter arrives leaves a bare colour screen and a dead step at every seam. Overlap the next chapter onto the flooded stage (`margin-top: -100vh`) and let the flood finish just after the next chapter starts rising. Check every seam with a dense sheet (`shots.mjs --n 24`) at 1440 and 375 — no frame may be a bare colour field.
+- Transformed elements (a travelling cursor, a word scaled 8×) grow `scrollHeight`: put `overflow: clip` (not only `overflow-x`) on pinned sections and the footer.
+- Fit-to-width words without JS: measure each word's em-width once, bake it as a CSS variable (`font-size: calc(100vw / var(--em))`), and let JS only refine it.
+- Visually-hidden screen-reader text inside a split-letter heading must reset its font size, or it inflates measurements.
+
 ## Dates, countdowns and deadlines
 - Required facts: the year and the time zone (default: the business's). No year → no countdown; say so in the report.
 - Decide and document whether a deadline day counts ("until 1 Feb" = last valid day), singular/plural wording, and what each element shows after its date passes (tier greyed and struck, "has closed", event-day state).
