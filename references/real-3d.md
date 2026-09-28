@@ -126,3 +126,10 @@ Products cross text on narrow screens: give text a solid/gradient band, lay long
 - **Mode classes vs component classes:** a component class that equals a mode class on `<html>` (`.cd-gl`) can hide the whole page — prefix mode classes differently (`is-gl`, `has-stage`).
 - **Phones:** a flex input's min-content can push a sticky caption wider than the screen — use `minmax(0, 1fr)` columns in caption grids. White caption text over a white object is invisible even with correct z-order — give captions a scrim when they can cross the object.
 
+## Engineering drawings in 3D, overlays in stills, caption timing (from the clinical bottle test)
+- **Technical lines:** `Line2`/`LineMaterial` (fat lines) with draw-on via `instanceCount`, dashed centre lines, `depthTest: false` for lines drawn over glass; sections with clipping planes and `ShapeGeometry` cut faces.
+- **Overlays in baked stills:** HTML/SVG overlays (dimension lines, leaders, labels) must be baked too — keep one overlay list rendered to SVG live and to canvas 2D at bake time, with a scale factor for 2× phone stills.
+- **Caption vs scene timing:** sticky captions appear about half a viewport before their chapter's timeline starts, so scenes lag captions — map the timeline from `scrollY + 0.5 × innerHeight`.
+- **Tall phone captions:** start the fade at `min(46vh, vh − captionHeight)` so the whole caption is seen before it fades.
+- **Holds:** add a slow camera drift in every hold; still frames and repetitive rows read as dead scroll.
+
