@@ -306,3 +306,13 @@ With JS off, the page shows the finished drawing, text included. It was checked 
 - **Many small labelled things in one beat:** numbered chips on the objects plus a list in the caption; name chips collide.
 - **Static fallbacks lose the stage's background:** captions written light-on-dark for a night beat turn white-on-paper without JS — give the fallback caption its own dark panel.
 
+## Machines over a line, growing products, night palettes (from the agency factory test)
+- **Canopies/presses over a conveyor:** anything above the belt hides the back of the product unless its underside is higher than the product top by at least the gap between the overhang's front edge and the product's back edge.
+- **Station labels** go on the +x wall — the +y wall ends up under canopies.
+- **A product that grows and travels:** write one scale helper for a built group (position, profile, extrusion, decals, text) and apply drops after scaling.
+- **Shared layers:** reuse with `<g>` inside `<defs>`, not `<symbol>` — a symbol with negative coordinates clips when used.
+- **Caption gaps** on long camera stories: keep the gap between captions near zero (the next caption rises as the previous leaves), or half-screens go empty.
+- **Baked stills and crops** show hard rectangular floor edges — soften with a radial `mask-image`.
+- **Night palettes:** mix saturated station hues less toward navy than neutrals (yellow and red turn brown).
+- Duplicate captions for the no-JS stills are fine if the duplicates are `aria-hidden` and the second h1 becomes a `<p>`. Parallel walk runs are safe (each has its own profile).
+
