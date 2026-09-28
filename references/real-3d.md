@@ -173,3 +173,10 @@ Products cross text on narrow screens: give text a solid/gradient band, lay long
 - **Resolving to a crisp image:** the crisp plane must include the frame chrome (browser bar), or the bar stays noisy next to a sharp screenshot.
 - **Final hold:** end the last hold at the page's scroll end so the drift keeps changing, and include scroll position in the render-on-demand key, or caption fades stall.
 - Rich chapter colours (never a black void) make particle pages read premium.
+
+## One-actor pages: transitions, framing, dimming (from the agency keycaps test)
+- **Transition frames with only the actor** (the key row, the cube, the drop) count as empty frames: keep each chapter's scene up for ~70% of its span, bring the caption in as the actor starts moving, and keep it until the next move starts.
+- **Aspect-aware poses:** compute each pose to fit a content box to a fraction of the viewport from the FOV and aspect, plus a view offset — fewer hand-tuned wide/tall keyframes.
+- **Dimming textured neighbours:** material colours are linear — `setRGB(0.1)` shows as ~35% grey; use `pow(g, 2.2)` to really darken screens behind captions. A wall of project screens needs a focus/dim system.
+- **Static fallback as a grid:** for long runways, fixed-vh sections laid out as still → caption row → still (not sticky) give the same height as the GL layout by construction; re-centre stills baked from off-centre poses.
+- A sticky contact form taller than the screen gets cut — let it flow (on phones always).
