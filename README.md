@@ -17,9 +17,10 @@ git clone https://github.com/Kopansky/interactive-landing-pages.git ~/.claude/sk
 2. **Strongest model, high effort.** A good page takes an agent 25–60 minutes and 250–600k tokens. Quick, cheap runs produce the timid pages this skill exists to prevent.
 3. **Invoke it explicitly:** start with `/interactive-landing-pages` (or say "use the interactive-landing-pages skill"), then describe the business. It asks one question, which direction, and builds.
 4. **Give it the facts you have** (name, services, hours, prices). Everything else becomes a placeholder tag, never an invented fact.
-5. **Be the client.** React to each page ("too small", "looks like a template", "bad", "love the knife page"). Each reaction becomes a rule in the brief's taste list. `templates/taste.md` is the starting taste, distilled from ~100 reviewed pages.
-6. **Several directions at once:** ask for 3–4 far-apart directions. The session then runs one background agent per page with `templates/variant-dispatch.md`, and reviews each page's contact sheet before showing it.
-7. **Optional tools:** an image-generation MCP for photographic directions (without one, choose drawn, isometric, 3D or type-led directions), and the Mobbin MCP for brand research.
+5. **It works as an art director.** The session sends one background agent per page, then reviews each page's screenshots against the house taste (`templates/taste.md`) and sends weak pages back before you see them.
+6. **Be the client.** React to each page ("too small", "looks like a template", "bad", "love the knife page"). Each reaction becomes a rule in the brief's taste list. `templates/taste.md` is the starting taste, distilled from ~100 reviewed pages.
+7. **Several directions at once:** ask for 3–4 far-apart directions. The session then runs one background agent per page with `templates/variant-dispatch.md`, and reviews each page's contact sheet before showing it.
+8. **Optional tools:** an image-generation MCP for photographic directions (without one, choose drawn, isometric, 3D or type-led directions), and the Mobbin MCP for brand research.
 
 ## What's inside
 
@@ -30,6 +31,7 @@ git clone https://github.com/Kopansky/interactive-landing-pages.git ~/.claude/sk
 | `references/brand-styles.md` | Measured style systems of 15 brands (Notion, Slack, Stripe, Linear, Apple, Firecrawl, Shopify, Wise, Figma, Airbnb, Jeton, Clay, ElevenLabs, ClickUp, Ctrl) |
 | `references/brand-research.md` | How to research a new reference brand (Mobbin + live-site measurement) |
 | `references/motion-recipes.md` | Vanilla JS/CSS patterns: scroll loop, pinned beats, SVG camera, portals, arc wheel, split-flap, page turn, pendulum + a list of bugs that happened in practice |
+| `references/art-director.md` | How the main session works: one background agent per page, review of every contact sheet against a checklist, fixes sent back, only finished pages shown |
 | `references/full-site.md` | Full-site mode: design system from the approved homepage, sitemap, inner-page patterns, navigation, SEO, whole-site verification |
 | `references/real-3d.md` | Real-time 3D with three.js: procedural products, scroll stories, baking fallback stills, performance, traps |
 | `references/isometric.md` | Guide to the isometric engine: axes, solid fields, draw order, groups, text on faces, camera, baking for no-JS, premium look |
