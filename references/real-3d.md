@@ -70,3 +70,14 @@ Products cross text on narrow screens: give text a solid/gradient band, lay long
 - **Labels on a straight-line explode** stack up: alternate the anchors above and below per part, and re-check on phones.
 - **Unknown price:** the buy block shows a price placeholder and "Colourway (illustrative)"; the picker recolours the live model.
 - **No cable shown** can read as "wireless": list it as an implied fact, and leave battery and latency out unless confirmed.
+
+## RTL pages, installed products, camera paths (from the smart-lock test)
+- **RTL × 3D:** text on the right, object on the left via a negative `setViewOffset`. Exploded layers should read right→left (outside → inside), which decides which side the camera sits on. In the scene use number badges and put the Hebrew names in the caption legend; floating Hebrew labels collide. Canvas text in baked stills needs the per-string direction rule (see phones).
+- **Installed products** (locks, taps, lights, fittings): the environment is part of the story. Make the door/wall see-through with opacity plus edge lines (jamb and wall fade too), use fog that follows camera distance so walls fall away, and change the lighting per beat (dusk outside → warm inside → white studio for the explode).
+- **Camera through geometry:** straight lerps between keyframes pass through slabs and objects. Give each segment a Bézier control point that swings wide, and check that no keyframe leaves the camera inside a mesh.
+- **Hands and fingers:** a capsule reads as a stick. Use a lathe profile with joint creases and a nail.
+- **Projected HTML labels:** call `updateMatrixWorld(true)` before `project()` when you pose and render in the same frame. Store label coordinates in JS; never parse `style.transform` back, because the browser rewrites it.
+- **Fallback stills must be `display:block`:** `<picture>` is inline, so `position: sticky` is silently ignored. In static mode the caption travels over the pinned still (both pinned = dead scroll).
+- **Header parity:** a negative header margin that applies only in live (`.gl`) mode breaks heightStable by exactly the header height; apply it in every mode.
+- **Captions on colour floods:** switch caption colour from the flood's brightness in JS.
+- **Absences are claims too:** no keyhole implies no mechanical backup; no keypad implies none; a success LED colour is a feature. Security products: never "unbreakable", "only you", "100% secure".
