@@ -98,7 +98,7 @@ Pass = `noHorizontalOverflow` true, `heightStable` true, `deadScrollSteps` 0 (JS
 
 ## Hygiene
 - On Windows Git Bash, arguments starting with `//` are rewritten as paths — set `MSYS_NO_PATHCONV=1` for scripts that take URLs or `//` patterns.
-- `canvas-job.mjs` / `compress.mjs` are slow on 4–11 MB sources (minutes): compress large generated images first and run long jobs in the background.
+- `canvas-job.mjs` / `compress.mjs` are slow on 4–11 MB sources (minutes): compress large generated images first and run long jobs in the background. 4K inputs take ~5 min per job — beyond the shell tool's 2-minute default timeout; write the job's JSON result to a file instead of piping it through `tail`. In a chained shell command a single `&` sends the whole `&&` chain (including `cd` and exports) to the background.
 - **Editing the skill's own scripts:** they run code inside template strings evaluated in the page — a quote of the wrong kind breaks them silently (typeScale comes back EVALERR). After any script edit, run it once on a published page and check the output before handing it to agents.
 - Scripts, screenshots and browser profiles live in the scratch subfolder — never in the delivery folder, never outside your own folder. Never delete other agents' files or the brief.
 - `scripts/cdp.mjs` deletes its Chrome profile after exit. Pass `--workdir` so profiles live in your own folder; clean up only `ilp-prof-*` folders you created — never shared temp folders other agents may be using. The orchestrator checks free disk space after a parallel round.

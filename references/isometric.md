@@ -338,3 +338,13 @@ With JS off, the page shows the finished drawing, text included. It was checked 
 - **Painter passes for a line world:** land → stations → viaduct → train → front parapets, with nearby objects kept on the back side of the line — a moving train then sorts correctly for free.
 - A 2×3 screen wall on an x/y face projects about as tall as wide — to make it big, rotate the world or put the caption at the side.
 - Large flat roofs: light tops with dark sides (dark tops read as heavy black slabs). A wide night scene cropped with `slice` loses its subject on phones — give it its own phone viewBox. Parallel preview helpers must write one file per output.
+
+## Pinball, kitchens, counters (from the agency round 7)
+- **Stacking:** everything standing on a long counter top must be `on:` that top; things hanging under a shelf chain `on:` the counter below with the shelf, or the counter paints over them; stacked floors rely on the z term (`on:` ignores the parent's z, so a thin slab `on:` a floor draws after the floor above it).
+- **Ramps a ball rides:** split into y-chunks like long rails.
+- **Drops:** force alpha to 1 once a big slab starts dropping (a fading drop shows its seams).
+- **Images on faces at their true aspect:** at φ = −π/4 a +y face is an unsheared rectangle, but the projection is ~1.22× wider than tall — a 2.1:1 screenshot needs a ~1.71:1 face.
+- **Domes/cloches over iso objects:** custom SVG sized from the projected corners, ~1.2× taller than a hemisphere.
+- Chips anchored to world points get clamped to the viewport on phones; card/ticket captions need the camera to keep drifting (~5% push per hold) or holds read as dead scroll; something must move from p = 0 on phones.
+- **Arcade and pinball themes:** no coin doors, credits, "extra ball" or score displays styled like results; never style the one real stat as a score.
+- **Back-to-back pinned stages:** give the first runway `margin-bottom:-100vh` and keep the second pin hidden until its runway top reaches 0 (matching frames make the swap invisible).
