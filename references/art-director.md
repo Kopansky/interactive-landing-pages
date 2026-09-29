@@ -38,3 +38,5 @@ Don't forward the agent's report as proof. For each page:
 - **No-JS on a phone:** a full-screen phone menu sheet that only JS can close covers the whole page without JS (walk counts it as hundreds of dead steps only on a 375 --nojs run) — gate it on `html.js`; run the 375 --nojs walk.
 - **Caption over the wrong image:** in carousels and walls, a caption must only ever sit over its own project; dimmed neighbours at ~35–40% (not black holes, not full brightness).
 - **Frames that are only the actor or only the road** (flights, turns, lift-offs) and **half-faded captions** over the subject — the most common failures; judge on the dense 24-frame sheet too, because an even 12-frame grid can land on (or be tuned to avoid) transitions.
+- **Phones at p = 1.00:** the footer wordmark must be whole on phones too — stacked columns push it off; put a second (static) wordmark after the legal row on phones.
+- **Metaphors that imply a service** (print, hardware, a venue): check the footer denies it and the report flags it to the client.
