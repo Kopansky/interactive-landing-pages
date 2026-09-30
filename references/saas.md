@@ -36,6 +36,8 @@ Distilled from 17 SaaS tests (10 fictional startups: feature flags, spend manage
 - **Dot world maps without data:** rasterise rough continent polygons at build time — no borders.
 - **Stationery family:** paper tone + one ink + one wax accent, SVG feTurbulence grain, leather-blotter corners.
 
+- **SaaS in real 3D:** the UI objects themselves (cards, board, post) are the actors and are sample content; pastel cards on pale backgrounds wash out — white card faces with dark outlines, stronger shadows and a clear colour per chapter; a "see the whole pipeline" overview of a world laid along one line reads empty — make the recap an action (a trail drawn across the scene).
+
 ## Pitfalls
 - `aspect-ratio` + `height:100%` inside a flex column works with JS and collapses without it (like `cqh` → 0); give flexible visuals a fixed height in no-JS/reduced motion.
 - A pinned stage whose visual is `height:auto` with absolute children resolves to 0 height on phones — walk passes, the sheet shows an empty stage.
