@@ -40,3 +40,7 @@ Don't forward the agent's report as proof. For each page:
 - **Frames that are only the actor or only the road** (flights, turns, lift-offs) and **half-faded captions** over the subject — the most common failures; judge on the dense 24-frame sheet too, because an even 12-frame grid can land on (or be tuned to avoid) transitions.
 - **Phones at p = 1.00:** the footer wordmark must be whole on phones too — stacked columns push it off; put a second (static) wordmark after the legal row on phones.
 - **Metaphors that imply a service** (print, hardware, a venue): check the footer denies it and the report flags it to the client.
+- **Split-screen seams:** full-bleed chapters caught half-and-half on the sheet — ask for a stacking hand-over (see saas.md) or a colour flood, not two half screens.
+- **Openings:** every pinned chart/build opens ≥ 30% built; the first object is on stage when the pin starts.
+- **Tuned sheets:** if a builder says timing was set to avoid your 12 sample points, review their dense 24-frame sheet too.
+- **Portfolio beats:** each project's own image must be showing while its caption is at full strength (covers, silk, lenses, flying books all open before the caption).
