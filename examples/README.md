@@ -1,6 +1,6 @@
 # House styles — the quality bar
 
-Contact sheets (12 frames, top to bottom of the page at 1440×900) of approved pages, and two rejected ones. The owner reviews every page and names only what they dislike, so every page not rejected counts as approved; these ~45 were also chosen by the art director as the strongest per style (pages with empty frames, small UI or pale screens were left out). They are the visual bar for the art director's review (`references/art-director.md` §3): "is this page at the level of these?" Study how big, how full and how concept-led they are. **Never copy a concept or layout from them**; every client gets their own spine.
+Contact sheets (12 frames, top to bottom of the page at 1440×900) of approved pages, and three rejected ones. The owner reviews every page and names only what they dislike, so every page not rejected counts as approved; these ~45 were also chosen by the art director as the strongest per style (pages with empty frames, small UI or pale screens were left out). They are the visual bar for the art director's review (`references/art-director.md` §3): "is this page at the level of these?" Study how big, how full and how concept-led they are. **Never copy a concept or layout from them**; every client gets their own spine.
 
 The styles are also the directions offered in the intake question (SKILL.md step 0). All sheets are in `good/`.
 
@@ -22,3 +22,4 @@ The styles are also the directions offered in the intake question (SKILL.md step
 |---|---|
 | `rejected/law-timid.jpg` | Narrow column, small serif type, list rows, no concept, no visual. Correct and "calm", ranked worst of all. |
 | `rejected/finance-thin-line.jpg` | A thin gold line and faint words on a near-black page. "Minimal is not premium": nothing to look at on most screens. |
+| `rejected/saas-dark-dashboard.jpg` | A light dashboard window floating on a new dark colour each chapter, beside a giant number. No world or object, UI never bigger than a card: reads as a generic SaaS template, while its world-based siblings were approved. |
