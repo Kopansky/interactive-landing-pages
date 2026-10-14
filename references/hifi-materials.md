@@ -48,6 +48,10 @@ Read this as well as `real-3d.md` when the brief asks for realistic 3D: "photore
 - Carve terrain under interiors (observatories, tunnels) and run a clearance pass on every camera flight: railings, rims, rooms.
 - Performance: refraction target always, planar reflection only above the water, both half resolution; DPR cap 1.25 on desktop and 1.5 on phones; idle at ~30 fps and stop when content covers the canvas or with `?still`.
 - Clamp NaN before any bloom pass: one NaN pixel spreads into a black square.
+- A water plane cuts through hollow floating objects: discard the surface inside a boat's footprint, or a glass-bottom window shows the sea surface instead of the interior.
+- **Foliage is geometry, not texture.** Seagrass is tens of thousands of instanced thin twisted blades (about 9 mm at the base to 2 mm at the tip) in clumps whose density follows noise, coloured per clump and per blade, with a back-light term and a clock-driven sway. Use a custom side attribute rather than `uv` in the vertex shader. Flat ribbons were the cheapest-looking thing on the first underwater page.
+- **Hero animals are driven by scroll, not by a timer.** Then the close pass (a ray at about half the frame width, countershaded sharks) is guaranteed to be on the frame where its caption is up, on the side away from the caption.
+- Expose the live timeline value (for example `window.__u`) and read it at given scroll fractions before tuning framing. Guessing which timeline value a sheet frame lands on tunes the wrong shot.
 
 ## Review checklist for a hi-fi page
 - On every macro frame: is the texture at physical scale, and does the highlight move between beats?
