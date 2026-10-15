@@ -35,6 +35,8 @@ Distilled from 17 SaaS tests (10 fictional startups: feature flags, spend manage
 - **Tactile paper (CSS 3D):** fold a sheet in thirds with back faces (swap z-index past 90°), align the shadow to the folded shape, split the envelope into back / letter / front pocket / flap; a tilted dark board in the hero needs a scroll-driven clip on phones.
 - **Dot world maps without data:** rasterise rough continent polygons at build time — no borders.
 - **Stationery family:** paper tone + one ink + one wax accent, SVG feTurbulence grain, leather-blotter corners.
+- **One invitation through the whole product (RSVP test, Kindreply):** a big drawn invitation and envelope carry every chapter: the card becomes the event page, the envelope gets channel stamps and a postmark, reply cards fly back and pile beside a stationery "Coming" counter, reminder letters land on the silent guests' cards and two flip to yes, the list exports, name chips fly onto seats around two big round tables seen from above, and a drawn door opens onto the same list for check-in. Every sample number adds up across chapters (yes + plus-ones = headcount = seats).
+- **Chapter colour change as a corner wipe:** a circle reveal grown from a screen corner reads as a deliberate wipe; grown from mid-screen it reads as a coloured blob in contact sheets.
 
 - **SaaS in real 3D:** the UI objects themselves (cards, board, post) are the actors and are sample content; pastel cards on pale backgrounds wash out — white card faces with dark outlines, stronger shadows and a clear colour per chapter; a "see the whole pipeline" overview of a world laid along one line reads empty — make the recap an action (a trail drawn across the scene).
 
@@ -45,4 +47,8 @@ Distilled from 17 SaaS tests (10 fictional startups: feature flags, spend manage
 - `%` padding on absolutely positioned device frames resolves against the stage width — use px/em.
 - The envelope's `bottom:%` refers to its clip box; flaps start in their open state in the HTML so no-JS shows the letter.
 - A letter-split wordmark with `space-between` + `max-height` + `overflow:clip` cuts descenders; footer wordmark progress comes from the element itself, not the footer's viewP (which ends ≈ 0.66).
+- **em layout inside elements with their own font-size:** an absolutely positioned h2 at 5.5em with `top:11em` resolves top against its own font size and lands off-screen. Register `@property --c { syntax:"<length>"; inherits:true; initial-value:0px }`, set `--c:1em` on the canvas and each scaled container, and position with `calc(var(--c) * N)`; the registered value is computed where it is set.
+- **Chips flying from a list cell to a seat or slot:** scale by the height ratio, not the width ratio, or the starting chips are huge and the list becomes a tall cropped column.
+- **Pinned list panels** (guest lists, check-in) must fit the viewport with a margin at 1440×900 while their animation runs; shrink row height or show fewer rows rather than letting the list run off the bottom.
+- **Mid-state frames are what the sheet shows:** cards with "no reply yet" and nothing else, or a form panel still typing in, read as empty. Start the stage ≥ 30% filled and land each card's change while its headline is up.
 - walk.mjs: `largestVisualPctOfScreen` reads 100 for full-stage SVG/canvas and undercounts HTML documents (add a window/mock/device class); a final scroll step under ~20px can show as dead scroll; `h1WidthPct` under-rates short two-word heroes — judge by height.
